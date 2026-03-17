@@ -1,0 +1,104 @@
+/* ============================================================
+   CSS RESET — bazat pe Meyer Reset, adaptat pentru AdoptHub
+   ============================================================ */
+
+:root {
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 2rem;
+    --line-height-base: 1.6;
+}
+
+/* ---- Unități fixe doar pe html și body ---- */
+html {
+    font-size: 16px;
+    line-height: 1;
+}
+
+body {
+    font-size: 16px;
+    line-height: var(--line-height-base);
+    margin: 0;
+    padding: 0;
+}
+
+/* ---- Reset universal ---- */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* ---- Elemente semantice block ---- */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, main, nav, section {
+    display: block;
+}
+
+summary {
+    display: list-item;
+    list-style-type: disclosure-closed;
+    cursor: pointer;
+}
+
+/* ---- Headings ---- */
+h1 { font-size: 2rem;    font-weight: bold; margin-bottom: var(--spacing-md); }
+h2 { font-size: 1.75rem; font-weight: bold; margin-bottom: var(--spacing-md); }
+h3 { font-size: 1.5rem;  font-weight: bold; margin-bottom: var(--spacing-sm); }
+h4 { font-size: 1.25rem; font-weight: bold; margin-bottom: var(--spacing-sm); }
+h5 { font-size: 1.1rem;  font-weight: bold; }
+h6 { font-size: 1rem;    font-weight: bold; }
+
+/* ---- Paragrafe ---- */
+p { margin-bottom: var(--spacing-sm); line-height: var(--line-height-base); }
+
+/* ---- Bold, italic, decorații ---- */
+b, strong { font-weight: bold; }
+i, em     { font-style: italic; }
+s         { text-decoration: line-through; }
+ins       { text-decoration: underline; }
+small     { font-size: 0.85em; }
+sub       { vertical-align: sub;   font-size: 0.75em; }
+sup       { vertical-align: super; font-size: 0.75em; }
+
+/* ---- Liste ---- */
+ul, ol {
+    padding-left: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+}
+ul { list-style: disc; }
+ol { list-style: decimal; }
+li { margin-bottom: var(--spacing-xs); }
+
+/* ---- Tabele ---- */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+th, td {
+    padding: var(--spacing-sm);
+    text-align: left;
+}
+
+/* ---- Linkuri ---- */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ---- Imagini ---- */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ---- Altele ---- */
+blockquote { margin: var(--spacing-md) 0; padding-left: var(--spacing-md); }
+details    { margin-bottom: var(--spacing-sm); }
+hr         { border: 0; border-top: 1px solid; margin: var(--spacing-md) 0; }
