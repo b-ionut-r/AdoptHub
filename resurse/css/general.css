@@ -1,14 +1,10 @@
-/* ============================================================
-   RESET
-   ============================================================ */
+/* RESET */
 *, *::before, *::after {
     box-sizing: border-box;
 }
 
 
-/* ============================================================
-   SCHEMA CROMATICĂ + VARIABILE GLOBALE
-   ============================================================ */
+/* SCHEMA CROMATICĂ + VARIABILE GLOBALE */
 body {
     --culoare-accent: #c96b43;
     --culoare-fundal: #faf5f0;
@@ -26,18 +22,14 @@ body {
 }
 
 
-/* ============================================================
-   FONT-SIZE RESPONSIVE (cu tranziție între breakpoints)
-   ============================================================ */
+/* FONT-SIZE RESPONSIVE (cu tranziție între breakpoints) */
 html {
     font-size: 16px;
     transition: font-size 0.3s ease;
 }
 
 
-/* ============================================================
-   ELEMENTE DE BAZĂ
-   ============================================================ */
+/* ELEMENTE DE BAZĂ */
 a {
     color: var(--culoare-accent);
 }
@@ -65,9 +57,7 @@ iframe, object {
 }
 
 
-/* ============================================================
-   HEADER & FOOTER
-   ============================================================ */
+/* HEADER & FOOTER */
 header {
     background-color: var(--culoare-accent);
     color: var(--culoare-fundal);
@@ -95,9 +85,7 @@ footer a {
 }
 
 
-/* ============================================================
-   IZOLARE VIZUALĂ ZONE (border + shadow + radius + padding)
-   ============================================================ */
+/* IZOLARE VIZUALĂ ZONE (border + shadow + radius + padding) */
 header, footer, main > * {
     border: 1px solid var(--culoare-border);
     box-shadow: 0px 0px 5px var(--culoare-border);
@@ -110,9 +98,7 @@ aside, .zona5, .zona6, .zona7 {
 }
 
 
-/* ============================================================
-   LAYOUT RESPONSIVE — GRID
-   ============================================================ */
+/* LAYOUT RESPONSIVE — GRID */
 main {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -142,9 +128,7 @@ main {
 }
 
 
-/* ============================================================
-   STILIZARE TABEL
-   ============================================================ */
+/* STILIZARE TABEL */
 table {
     border-collapse: collapse;
     width: 100%;
@@ -201,9 +185,7 @@ tbody tr:hover {
 }
 
 
-/* ============================================================
-   STILIZARE TABURI IFRAME (video)
-   ============================================================ */
+/* STILIZARE TABURI IFRAME (video) */
 .video-container {
     display: flex;
     align-items: flex-start;
@@ -245,9 +227,7 @@ tbody tr:hover {
 }
 
 
-/* ============================================================
-   CARDURI ANIMALE
-   ============================================================ */
+/* CARDURI ANIMALE */
 #animale-recomandate {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -264,9 +244,7 @@ tbody tr:hover {
 }
 
 
-/* ============================================================
-   MATHML
-   ============================================================ */
+/* MATHML */
 math {
     display: block;
     font-size: 1.4rem;
@@ -297,9 +275,7 @@ msub mi:last-child {
 }
 
 
-/* ============================================================
-   LINK TOP
-   ============================================================ */
+/* LINK TOP */
 #link-top {
     position: fixed;
     bottom: 2rem;
@@ -361,9 +337,7 @@ msub mi:last-child {
 }
 
 
-/* ============================================================
-   ECRAN MEDIU (max 1000px)
-   ============================================================ */
+/* ECRAN MEDIU (max 1000px) */
 @media (max-width: 1000px) {
     html {
         font-size: 15px;
@@ -399,9 +373,7 @@ msub mi:last-child {
 }
 
 
-/* ============================================================
-   ECRAN MIC (max 700px)
-   ============================================================ */
+/* ECRAN MIC (max 700px) */
 @media (max-width: 700px) {
     html {
         font-size: 14px;
