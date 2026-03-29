@@ -20,7 +20,7 @@
         }
     }
     @page :first {
-        @bottom-center {
+        @bottom-left {
             content: "Acesta este un proiect școlar!";
             border: 4px inset black;
             text-align: center;
@@ -42,6 +42,7 @@
 
     main, #animale-recomandate { display: block; }
     nav ul { display: block; list-style: disc inside; }
+    nav ul > li > a .text-nav { display: inline; }
     main { padding: 0; }
 
     h1 { text-align: center; }
