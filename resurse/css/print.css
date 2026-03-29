@@ -1,0 +1,51 @@
+@media screen {
+    #watermark { display: none; }
+}
+
+@media print {
+    @page {
+        size: A4 portrait;
+        margin-bottom: 2cm;
+        @bottom-right {
+            content: "Bujor\A Ionuț";
+            white-space: pre;
+            width: 4cm;
+            height: 1cm;
+            border: 3px solid black;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 7pt;
+            opacity: 0.4;
+        }
+    }
+    @page :first {
+        @bottom-center {
+            content: "Acesta este un proiect școlar!";
+            border: 4px inset black;
+            text-align: center;
+            padding: 2px 8px;
+            width: 70%;
+        }
+    }
+    @page :left { margin-left: 3cm; margin-right: 1cm; }
+    @page :right { margin-left: 1cm; margin-right: 3cm; }
+
+    #banner-print, #watermark { display: none; }
+
+    body { background: white; }
+    header, footer { background: none; color: black; border: none; box-shadow: none; }
+    a { color: black !important; text-decoration: none !important; }
+
+    img, video, iframe, object, figure, figcaption, .video-container { display: none; }
+    #link-top, .link-sus { display: none; }
+
+    main, #animale-recomandate { display: block; }
+    nav ul { display: block; list-style: disc inside; }
+    main { padding: 0; }
+
+    h1 { text-align: center; }
+    nav ul ul { display: none; }
+    header { page-break-after: always; }
+    footer { page-break-before: always; }
+}

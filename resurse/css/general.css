@@ -12,6 +12,8 @@ body {
     --culoare-text: #3a2c23;
     --culoare-border: #c8a888;
     --culoare-highlight: #5c8a6a;
+    --culoare-separator-c1: #5c8a6a;
+    --culoare-separator-c2: #c96b43;
     --margine-pagina: 100px;
     --gap-grid: 1rem;
     --padding-zona: 1rem;
@@ -121,6 +123,7 @@ main {
 .zona7 { grid-area: zona7; }
 .zona8 { grid-area: zona8; }
 
+/* rest (bonusuri): toate coloanele */
 #ghid-pdf,
 #video,
 #locatie-contact {
@@ -130,7 +133,8 @@ main {
 
 /* STILIZARE TABEL */
 table {
-    border-collapse: collapse;
+    border-collapse: separate; /* permite control exact pe separatorul vertical */
+    border-spacing: 0;
     width: 100%;
 }
 
@@ -147,7 +151,13 @@ caption {
 
 th, td {
     border: 1px solid var(--culoare-border);
+    border-left: 0;
     padding: 0.5rem;
+}
+
+th:first-child,
+td:first-child {
+    border-left: 1px solid var(--culoare-border);
 }
 
 th {
@@ -155,14 +165,15 @@ th {
     color: var(--culoare-fundal);
 }
 
-/* Borduri alternate între coloane */
-td:nth-child(even), th:nth-child(even) {
-    border-left-color: var(--culoare-highlight);
+/* Separatori verticali alternanți între coloane: */
+td:nth-child(even):not(:last-child),
+th:nth-child(even):not(:last-child) {
+    border-right-color: var(--culoare-separator-c1);
 }
 
-td:nth-child(odd):not(:first-child),
-th:nth-child(odd):not(:first-child) {
-    border-left-color: var(--culoare-accent);
+td:nth-child(odd):not(:last-child),
+th:nth-child(odd):not(:last-child) {
+    border-right-color: var(--culoare-separator-c2);
 }
 
 /* Border mai gros între thead/tbody și tbody/tfoot */
@@ -171,8 +182,16 @@ thead tr:last-child td {
     border-bottom: 3px solid var(--culoare-border);
 }
 
+tbody tr:first-child td {
+    border-top: 0;
+}
+
 tbody tr:last-child td {
     border-bottom: 3px solid var(--culoare-border);
+}
+
+tfoot tr:first-child td {
+    border-top: 0;
 }
 
 /* Hover rând cu box-shadow (tranziție 0.5s) */
@@ -370,6 +389,10 @@ msub mi:last-child {
     .tabel-container {
         overflow-x: auto;
     }
+
+    .tabel-container table {
+        min-width: 760px;
+    }
 }
 
 
@@ -408,6 +431,10 @@ msub mi:last-child {
 
     .tabel-container {
         overflow-x: auto;
+    }
+
+    .tabel-container table {
+        min-width: 760px;
     }
 
     * {

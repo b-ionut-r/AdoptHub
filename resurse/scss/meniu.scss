@@ -1,0 +1,186 @@
+$dur:     0.3s;
+$nul:     0;
+$bare:    3;
+$t-delay: 300;
+
+%reset-lista { list-style: none; padding: $nul; margin: $nul; }
+%ascuns      { display: none; }
+%link-nav    { display: block; padding: 0.55rem 1rem; text-decoration: none; color: inherit; white-space: nowrap; }
+
+// Variabile CSS pentru temă (declarate în body)
+body {
+    --nav-overlay:   rgba(255, 255, 255, 0.2);
+    --nav-sub-bg:    var(--culoare-text);
+    --nav-sub-hover: #4e3a2f;
+    --nav-sub-text:  var(--culoare-fundal-secundar);
+}
+
+#nav-toggle { @extend %ascuns; }
+#hamburger  { @extend %ascuns; }
+#nav-close  { @extend %ascuns; }
+
+@keyframes sub-apare {
+    from { opacity: $nul; transform: scale($nul, $nul); }
+    to   { opacity: 1;    transform: scale(1, 1); }
+}
+@keyframes sub-apare-jos {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes bara-apare {
+    0%   { opacity: 0; transform: scaleX(0); background-color: var(--culoare-accent); }
+    60%  { opacity: 0.6; transform: scaleX(1.1); background-color: var(--culoare-highlight); }
+    100% { opacity: 1; transform: scaleX(1); background-color: var(--culoare-fundal); }
+}
+@keyframes clip-deschide {
+    from { transform: translateX(-100%); }
+    to   { transform: translateX(0); }
+}
+
+header nav ul { list-style: none; } // suprascrie general.css
+
+nav ul {
+    @extend %reset-lista;
+    display: flex;
+    justify-content: center;
+
+    ul {
+        @extend %reset-lista;
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: $nul;
+        min-width: 200px;
+        background-color: var(--nav-sub-bg);
+        z-index: 100;
+        transform-origin: top left;
+        animation: sub-apare $dur ease forwards;
+    }
+
+    > li {
+        position: relative;
+
+        > a {
+            @extend %link-nav;
+            position: relative;
+            overflow: hidden;
+
+            &::before {
+                content: '';
+                position: absolute;
+                inset: $nul;
+                background-color: var(--nav-overlay);
+                transform: scale($nul);
+                transition: transform $dur ease;
+            }
+            &:hover::before { transform: scale(1); }
+        }
+
+        &:hover > ul { display: block; }
+
+        ul li a {
+            @extend %link-nav;
+            color: var(--nav-sub-text);
+
+            &:hover {
+                background-color: var(--nav-sub-hover);
+                color: var(--culoare-fundal);
+                text-shadow: 0 0 8px rgba(255, 255, 255, 0.4), 1px 1px 2px rgba(0, 0, 0, 0.5);
+            }
+        }
+    }
+}
+
+// Ecran mediu — doar iconuri în meniu
+@media (max-width: 1000px) {
+    nav ul > li > a .text-nav { display: none; }
+}
+
+// Ecran mic — hamburger
+@media (max-width: 700px) {
+    #hamburger {
+        display: block;
+        position: relative;
+        width: 36px;
+        height: 24px;
+        cursor: pointer;
+
+        span {
+            position: absolute;
+            left: $nul;
+            height: 3px;
+            border-radius: 2px;
+            transform-origin: left center;
+            animation: bara-apare 0.5s ease both;
+        }
+
+        @for $i from 1 through $bare {
+            span:nth-child(#{$i}) {
+                width: #{32 - ($i - 1) * 4}px;
+                top: #{($i - 1) * 10}px;
+                animation-delay: #{($i - 1) * $t-delay}ms;
+            }
+        }
+    }
+
+    #nav-toggle:checked ~ #nav-close {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1001;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        background-color: var(--culoare-fundal-secundar);
+        color: var(--culoare-text);
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    nav > ul { display: none; }
+
+    #nav-toggle:checked ~ ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        position: fixed;
+        top: $nul;
+        left: $nul;
+        right: $nul;
+        padding: 3rem 0 2rem;
+        background-color: var(--culoare-text);
+        z-index: 1000;
+        clip-path: polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%);
+        animation: clip-deschide 0.5s ease forwards;
+
+        > li {
+            width: 100%;
+            text-align: center;
+
+            > a {
+                padding: 0.75rem;
+                font-size: 1.1rem;
+                color: var(--culoare-fundal-secundar);
+                &::before { content: none; }
+                &:hover   { background-color: rgba(255, 255, 255, 0.08); }
+                .text-nav { display: inline; }
+            }
+
+            &:first-child > a .text-nav { display: none;
+            }
+
+            ul {
+                position: static;
+                width: 100%;
+                background-color: rgba(255, 255, 255, 0.05);
+                animation-name: sub-apare-jos;
+                animation-duration: 0.7s;
+            }
+        }
+    }
+}
