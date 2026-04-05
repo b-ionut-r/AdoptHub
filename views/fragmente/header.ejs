@@ -1,0 +1,32 @@
+    <header>
+        <h1><i class="fa-solid fa-paw"></i> AdoptHub</h1>
+        <p>Cea mai căutată platformă pentru adopția animalelor de companie din România.</p>
+        <p>IP utilizator: <%- locals.ip %></p>
+
+        <nav aria-label="Navigație principală">
+            <input type="checkbox" id="nav-toggle">
+            <label for="nav-toggle" id="hamburger"><span></span><span></span><span></span></label>
+            <label for="nav-toggle" id="nav-close">✕</label>
+            <ul>
+                <li>
+                    <a href="/"><i class="fa-solid fa-house"></i> <span class="text-nav">Acasă</span></a>
+                    <ul>
+                        <li><a href="/#intro">Despre platformă</a></li>
+                        <li><a href="/#animale-recomandate">Animale recomandate</a></li>
+                        <li><a href="/#quiz">Ghid compatibilitate</a></li>
+                        <li><a href="/#evenimente">Evenimente</a></li>
+                        <li><a href="/#video">Video</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa-solid fa-paw"></i> <span class="text-nav">Animale</span></a>
+                    <ul>
+                        <li><a href="/cauta-animale">Caută animale</a></li>
+                        <li><a href="/profil-animal">Profil animal</a></li>
+                    </ul>
+                </li>
+                <li><a href="/adaposturi"><i class="fa-solid fa-building-user"></i> <span class="text-nav">Adăposturi</span></a></li>
+                <li><a href="/despre"><i class="fa-solid fa-envelope"></i> <span class="text-nav">Despre &amp; Contact</span></a></li>
+            </ul>
+        </nav>
+    </header>

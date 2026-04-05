@@ -14,6 +14,7 @@ body {
     --culoare-highlight: #5c8a6a;
     --culoare-separator-c1: #5c8a6a;
     --culoare-separator-c2: #c96b43;
+    --culoare-link-vizitat: #c8a888;
     --margine-pagina: 100px;
     --gap-grid: 1rem;
     --padding-zona: 1rem;
@@ -36,8 +37,45 @@ a {
     color: var(--culoare-accent);
 }
 
+a:visited {
+    color: var(--culoare-link-vizitat);
+}
+
 a:hover {
     color: var(--culoare-highlight);
+}
+
+/* Linkuri externe: simbol ⮳ generat înainte */
+a[href^="http"]::before {
+    content: "⮳";
+    font-size: 1.5em;
+    margin-right: 0.15em;
+}
+
+a[href^="http"]:hover::before {
+    color: var(--culoare-accent);
+}
+
+/* Pată de culoare care crește din centru la hover (doar linkuri din main) */
+main a {
+    background-image: radial-gradient(circle,
+        rgba(92, 138, 106, 0.3) 0%,
+        rgba(92, 138, 106, 0.3) 40%,
+        transparent 80%,
+        transparent 100%);
+    background-position: center;
+    background-size: 0;
+    background-repeat: no-repeat;
+    transition: background-size 0.4s ease;
+}
+
+main a:hover {
+    background-size: 100%;
+}
+
+/* Border la click pe orice link */
+a:active {
+    outline: 2px solid var(--culoare-accent);
 }
 
 blockquote {
@@ -126,6 +164,7 @@ main {
 /* rest (bonusuri): toate coloanele */
 #ghid-pdf,
 #video,
+#video-vtt,
 #locatie-contact {
     grid-column: 1 / -1;
 }
@@ -441,4 +480,20 @@ msub mi:last-child {
         animation: none;
         transition: none;
     }
+}
+
+
+/* VIDEO VTT */
+#video-vtt video {
+    width: 80%;
+    min-width: 280px;
+    max-width: 900px;
+    display: block;
+    margin: 1rem auto;
+}
+
+::cue {
+    background-color: white;
+    color: var(--culoare-text);
+    text-align: center;
 }

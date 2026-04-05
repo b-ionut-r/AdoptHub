@@ -1,0 +1,17 @@
+WEBVTT
+
+STYLE
+::cue {
+    background-color: white;
+    color: #3a2c23;
+    text-align: center;
+}
+
+00:00:00.500 --> 00:00:02.500 line:5% position:50% align:center
+AdoptHub — platforma de adopție animale din România.
+
+00:00:03.000 --> 00:00:05.500 line:5% position:50% align:center
+Câini, pisici și alte animale te așteaptă la adăposturile partenere.
+
+00:00:06.000 --> 00:00:08.000 line:5% position:50% align:center
+Adoptă <i>responsabil</i> și oferă un cămin animalelor fără stăpân.

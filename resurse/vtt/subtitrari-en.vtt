@@ -1,0 +1,17 @@
+WEBVTT
+
+STYLE
+::cue {
+    background-color: white;
+    color: #3a2c23;
+    text-align: center;
+}
+
+00:00:00.500 --> 00:00:02.500 line:5% position:50% align:center
+AdoptHub — Romania's pet adoption platform.
+
+00:00:03.000 --> 00:00:05.500 line:5% position:50% align:center
+Dogs, cats and other animals are waiting at our partner shelters.
+
+00:00:06.000 --> 00:00:08.000 line:5% position:50% align:center
+Adopt <i>responsibly</i> and give a home to animals in need.
