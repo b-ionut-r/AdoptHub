@@ -297,6 +297,15 @@ tbody tr:hover {
     grid-column: 1 / -1;
 }
 
+#animale-recomandate article {
+    display: flex;
+    flex-direction: column;
+}
+
+#animale-recomandate article figure {
+    margin-top: auto;
+}
+
 #animale-recomandate article > * {
     margin-bottom: 0.75rem;
 }
