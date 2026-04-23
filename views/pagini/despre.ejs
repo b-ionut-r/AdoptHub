@@ -8,8 +8,8 @@
 </head>
 <body id="top">
     <%- include('../fragmente/header.ejs') %>
-    <main>
-        <section>
+    <main class="pagina-despre">
+        <section id="despre-prezentare">
             <hgroup>
                 <h2>Despre AdoptHub</h2>
                 <p>Misiunea noastră</p>
@@ -28,11 +28,110 @@
                 <li>Adăpostul te contactează și stabiliți pașii următori.</li>
             </ol>
 
+            <hr class="hr-decorat">
+
             <h3>Contact</h3>
             <p>Email: <a href="mailto:contact@adopthub.ro">contact@adopthub.ro</a></p>
             <p>Telefon: <a href="tel:+40212345678">+40 21 234 56 78</a></p>
         </section>
+        <section id="tabel-adoptat">
+            <h3>Animale adoptate recent</h3>
+            <div class="tabel-responsiv-container">
+            <table id="transpus">
+                <caption>Exemple de animale adoptate prin AdoptHub</caption>
+                <thead>
+                    <tr>
+                        <th>Nume</th>
+                        <th>Specie</th>
+                        <th>Vârstă</th>
+                        <th>Talie</th>
+                        <th>Energie</th>
+                        <th>Localitate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Nume">Max</td>
+                        <td data-label="Specie">Câine</td>
+                        <td data-label="Vârstă">10 luni</td>
+                        <td data-label="Talie">Mică</td>
+                        <td data-label="Energie">Ridicată</td>
+                        <td data-label="Localitate">Ilfov</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Nume">Luna</td>
+                        <td data-label="Specie">Pisică</td>
+                        <td data-label="Vârstă">2 ani</td>
+                        <td data-label="Talie">Medie</td>
+                        <td data-label="Energie">Moderată</td>
+                        <td data-label="Localitate">Brașov</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Nume">Miki</td>
+                        <td data-label="Specie">Câine</td>
+                        <td data-label="Vârstă">4 ani</td>
+                        <td data-label="Talie">Medie</td>
+                        <td data-label="Energie">Moderată</td>
+                        <td data-label="Localitate">Constanța</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Nume">Mia</td>
+                        <td data-label="Specie">Pisică</td>
+                        <td data-label="Vârstă">1 an</td>
+                        <td data-label="Talie">Mică</td>
+                        <td data-label="Energie">Ridicată</td>
+                        <td data-label="Localitate">Cluj-Napoca</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Nume">Rex</td>
+                        <td data-label="Specie">Câine</td>
+                        <td data-label="Vârstă">6 ani</td>
+                        <td data-label="Talie">Mare</td>
+                        <td data-label="Energie">Scăzută</td>
+                        <td data-label="Localitate">Timișoara</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </section>
     </main>
+    <div id="fundal-fix">Fiecare animal merită o a doua șansă.</div>
+    <section id="bootstrap-showcase">
+        <h2>Statistici platformă</h2>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <div class="card text-bg-primary h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Animale adoptate</h5>
+                        <p class="card-text">Peste 1.200 de animale și-au găsit o casă prin AdoptHub.</p>
+                        <a href="/galerie" class="btn btn-light">Vezi galeria</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-bg-secondary h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Adăposturi partenere</h5>
+                        <p class="card-text">Colaborăm cu <strong>85</strong> de adăposturi verificate din România.</p>
+                        <a href="#" class="btn btn-light">Parteneri</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-bg-dark h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Specii disponibile</h5>
+                        <p class="card-text">
+                            <span class="badge bg-primary">Câini</span>
+                            <span class="badge bg-secondary">Pisici</span>
+                            <span class="badge text-bg-light">Hamsteri</span>
+                        </p>
+                        <a href="#" class="btn btn-secondary mt-2">Caută animale</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <%- include('../fragmente/footer.ejs') %>
 </body>
 </html>

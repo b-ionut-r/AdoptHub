@@ -1,0 +1,113 @@
+@use '../../node_modules/bootstrap/scss/bootstrap' with (
+    // Familie de font implicita
+    $font-family-sans-serif: ("Nunito", sans-serif),
+
+    // Culori teme (schema cromatica AdoptHub)
+    $primary:    #c96b43,
+    $secondary:  #5c8a6a,
+    $light:      #faf5f0,
+    $dark:       #3a2c23,
+    $body-bg:    #faf5f0,
+    $body-color: #3a2c23,
+
+    // Culoare link si hover link
+    $link-color:       #c96b43,
+    $link-hover-color: #5c8a6a,
+
+    // Culoare headinguri (litere)
+    $headings-color: #3a2c23,
+
+    // Raze border
+    $border-radius:    6px,
+    $border-radius-sm: 4px,
+    $border-radius-lg: 8px,
+    $border-radius-xl: 12px,
+
+    // Dimensiuni headinguri (h1-h6)
+    $h1-font-size: 2rem,
+    $h2-font-size: 1.6rem,
+    $h3-font-size: 1.35rem,
+    $h4-font-size: 1.15rem,
+    $h5-font-size: 1rem,
+    $h6-font-size: 0.875rem,
+
+    // Breakpointuri ecrane medii (md: 700px) si mari (lg: 1000px)
+    $grid-breakpoints: (
+        xs: 0,
+        sm: 480px,
+        md: 700px,
+        lg: 1000px,
+        xl: 1200px,
+        xxl: 1400px
+    ),
+    $container-max-widths: (
+        sm: 460px,
+        md: 680px,
+        lg: 960px,
+        xl: 1140px,
+        xxl: 1320px
+    ),
+);
+
+
+// Corectare Bootstrap — restaurare aspect initial al site-ului
+
+img {
+    width: 68%;
+    min-width: 200px;
+    max-width: 100%;
+    height: auto;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+header nav ul {
+    list-style: disc inside;
+    padding: 0;
+    margin: 0;
+}
+
+a[href^="http"]::before {
+    content: "⮳";
+    font-size: 1.5em;
+    margin-right: 0.15em;
+}
+
+// Sectiune Bootstrap demo — span pe toata latimea grilei
+#bootstrap-showcase {
+    grid-column: 1 / -1;
+}
+
+// --- Stilizare HR (Efect CSS) ---
+hr.hr-stelute {
+    border: none;
+    height: 3px;
+    background-color: $primary;
+    position: relative;
+    overflow: visible;
+    margin: 3rem auto;
+    width: 60%;
+    opacity: 1;
+
+    &::before, &::after {
+        content: "⭐";
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.5rem;
+        color: $primary;
+        background-color: $body-bg;
+        padding: 0 0.5rem;
+    }
+
+    &::before {
+        left: 20%;
+    }
+
+    &::after {
+        right: 20%;
+    }
+}

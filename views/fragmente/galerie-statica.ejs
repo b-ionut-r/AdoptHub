@@ -1,0 +1,50 @@
+    <section id="galerie-statica">
+        <div class="titlu-galerii-wrapper">
+            <h2>Semne utile la prima vizita</h2>
+            <p class="info-galerie">
+                Galeria pune accent pe momente care chiar te ajuta la prima vizita intr-un adapost:
+                calm, curiozitate, joc si reactie la contactul cu omul.
+                Sunt afisate doar cadrele potrivite pentru ora curenta a serverului:
+                <strong><%= galerie.ora_curenta %></strong>.
+            </p>
+        </div>
+
+        <% if (galerie.imagini.length) { %>
+        <div id="grid-galerie">
+            <% galerie.imagini.forEach(function(imagine) { %>
+            <figure>
+                <picture>
+                    <source media="(max-width: 700px)" srcset="<%= imagine.sursa_mica %>">
+                    <source media="(max-width: 1000px)" srcset="<%= imagine.sursa_mediu %>">
+                    <img
+                        src="<%= imagine.sursa_mare %>"
+                        alt="<%= imagine.alt_final %>"
+                        title="<%= imagine.title_final %>"
+                        width="480"
+                        height="320">
+                </picture>
+                <figcaption>
+                    <span class="titlu-galerie"><%= imagine.titlu %></span>
+                    <span class="descriere-galerie"><%= imagine.descriere %></span>
+                    <span class="interval-galerie">Vizibil intre <%= imagine.timp %></span>
+                    <% if (imagine.atribuirie) { %>
+                    <span class="credit-galerie">
+                        Credit foto:
+                        <a href="<%= imagine.atribuirie.sursa %>" target="_blank" rel="noopener noreferrer">
+                            <%= imagine.atribuirie.autor %>
+                        </a>
+                        (<%= imagine.atribuirie.licenta %>)
+                    </span>
+                    <% } %>
+                </figcaption>
+            </figure>
+            <% }) %>
+        </div>
+        <% } else { %>
+        <p class="galerie-goala">Nu exista imagini in intervalul orar curent.</p>
+        <% } %>
+
+        <% if (typeof afiseazaLinkGalerie !== "undefined" && afiseazaLinkGalerie) { %>
+        <p class="link-galerie-pagina"><a href="/galerie">Vezi galeria completa</a></p>
+        <% } %>
+    </section>

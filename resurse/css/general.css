@@ -19,6 +19,7 @@ body {
     --gap-grid: 1rem;
     --padding-zona: 1rem;
     margin: 0;
+    overflow-x: hidden;
     font-family: 'Nunito', sans-serif;
     background-color: var(--culoare-fundal);
     color: var(--culoare-text);
@@ -131,6 +132,7 @@ header, footer, main > * {
     box-shadow: 0px 0px 5px var(--culoare-border);
     border-radius: 6px;
     padding: var(--padding-zona);
+    min-width: 0;
 }
 
 aside, .zona5, .zona6, .zona7 {
@@ -141,13 +143,13 @@ aside, .zona5, .zona6, .zona7 {
 /* LAYOUT RESPONSIVE — GRID */
 main {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     grid-template-areas:
-        "zona1 zona1 zona1"
-        "zona5 zona6 zona7"
-        "zona3 zona3 zona2"
-        "zona4 zona4 zona2"
-        "zona8 zona8 zona8";
+        "zona1 zona1 zona1 zona1"
+        "zona5 zona6 zona6 zona7"
+        "zona3 zona3 zona2 zona2"
+        "zona4 zona4 zona2 zona2"
+        "zona8 zona8 zona8 zona8";
     gap: var(--gap-grid);
     padding: 0 var(--margine-pagina);
 }
@@ -311,6 +313,170 @@ tbody tr:hover {
 }
 
 
+/* GALERIE STATICA & DINAMICA TITLURI */
+.titlu-galerii-wrapper {
+    text-align: center;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.titlu-galerii-wrapper h2 {
+    margin-bottom: 0.75rem;
+}
+
+.titlu-galerii-wrapper .info-galerie {
+    max-width: 48rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* GALERIE STATICA */
+#galerie-statica {
+    grid-column: 1 / -1;
+}
+
+#galerie-statica .link-galerie-pagina,
+#galerie-statica .galerie-goala {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+#grid-galerie {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1.15rem 1rem;
+    counter-reset: litera-galerie;
+    align-items: start;
+}
+
+#grid-galerie figure {
+    margin: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    height: 100%;
+    counter-increment: litera-galerie;
+}
+
+#grid-galerie figure:nth-child(1) { grid-column: 1; grid-row: 1; }
+#grid-galerie figure:nth-child(2) { grid-column: 2; grid-row: 1; }
+#grid-galerie figure:nth-child(3) { grid-column: 3; grid-row: 1; }
+#grid-galerie figure:nth-child(4) { grid-column: 4; grid-row: 1; }
+#grid-galerie figure:nth-child(5) { grid-column: 1; grid-row: 2; }
+#grid-galerie figure:nth-child(6) { grid-column: 4; grid-row: 2; }
+#grid-galerie figure:nth-child(7) { grid-column: 1; grid-row: 3; }
+#grid-galerie figure:nth-child(8) { grid-column: 2; grid-row: 3; }
+#grid-galerie figure:nth-child(9) { grid-column: 3; grid-row: 3; }
+#grid-galerie figure:nth-child(10) { grid-column: 4; grid-row: 3; }
+
+#grid-galerie picture {
+    display: block;
+}
+
+#grid-galerie img {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 0.75rem;
+    box-shadow: 0 12px 24px rgba(58, 44, 35, 0.12);
+    transform-origin: center bottom;
+    transition: transform 1.25s ease, box-shadow 1.25s ease;
+}
+
+#grid-galerie figcaption {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    flex: 1;
+    min-height: 11rem;
+    padding: 0.95rem 1rem;
+    border: 1px solid rgba(200, 168, 136, 0.75);
+    border-radius: 0.75rem;
+    background-color: var(--culoare-fundal-secundar);
+    transition: background-color 1.25s ease, color 1.25s ease, border-color 1.25s ease;
+}
+
+#grid-galerie .titlu-galerie {
+    display: block;
+    font-weight: 800;
+    font-size: 1.05rem;
+    line-height: 1.35;
+}
+
+#grid-galerie .titlu-galerie::before {
+    content: counter(litera-galerie, lower-alpha) ". ";
+    color: var(--culoare-accent);
+}
+
+#grid-galerie .descriere-galerie {
+    display: block;
+    line-height: 1.55;
+}
+
+#grid-galerie .interval-galerie {
+    display: inline-flex;
+    align-self: flex-start;
+    margin-top: auto;
+    padding: 0.25rem 0.65rem;
+    border: 1px solid var(--culoare-border);
+    border-radius: 999px;
+    background-color: var(--culoare-fundal);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+#grid-galerie .credit-galerie {
+    display: block;
+    margin-top: 0.2rem;
+    padding-top: 0.45rem;
+    border-top: 1px dashed var(--culoare-border);
+    font-size: 0.84rem;
+    line-height: 1.45;
+}
+
+#grid-galerie .credit-galerie a {
+    color: inherit;
+    text-decoration-thickness: 1px;
+}
+
+#grid-galerie figure:hover {
+    z-index: 2;
+}
+
+#grid-galerie figure:hover img {
+    transform: scale(1.3);
+    box-shadow: 0 18px 32px rgba(58, 44, 35, 0.2);
+}
+
+#grid-galerie figure:hover figcaption {
+    background-color: var(--culoare-highlight);
+    color: var(--culoare-fundal);
+    border-color: var(--culoare-highlight);
+}
+
+#grid-galerie figure:hover .titlu-galerie::before,
+#grid-galerie figure:hover .credit-galerie a {
+    color: inherit;
+}
+
+#grid-galerie figure:hover .interval-galerie {
+    background-color: rgba(250, 245, 240, 0.12);
+    border-color: currentColor;
+    color: inherit;
+}
+
+#grid-galerie figure:hover .credit-galerie {
+    border-top-color: rgba(250, 245, 240, 0.35);
+}
+
+
 /* MATHML */
 math {
     display: block;
@@ -403,6 +569,10 @@ msub mi:last-child {
     transform: translateY(-50%) rotate(-90deg);
 }
 
+/* #watermark {
+    display: none;
+} */
+
 
 /* ECRAN MEDIU (max 1000px) */
 @media (max-width: 1000px) {
@@ -441,6 +611,15 @@ msub mi:last-child {
     .tabel-container table {
         min-width: 760px;
     }
+
+    #grid-galerie {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #grid-galerie figure {
+        grid-column: auto !important;
+        grid-row: auto !important;
+    }
 }
 
 
@@ -477,6 +656,10 @@ msub mi:last-child {
         grid-template-columns: 1fr;
     }
 
+    #grid-galerie {
+        grid-template-columns: 1fr;
+    }
+
     .tabel-container {
         overflow-x: auto;
     }
@@ -505,4 +688,201 @@ msub mi:last-child {
     background-color: white;
     color: var(--culoare-text);
     text-align: center;
+}
+
+
+/* EFECT: text selectat */
+::selection {
+    background-color: var(--culoare-accent);
+    color: var(--culoare-fundal);
+}
+
+
+/* EFECT: text pe coloane */
+#intro > section {
+    column-count: 3;
+    column-gap: 1.5rem;
+    column-rule: 1px solid var(--culoare-border);
+}
+
+@media (max-width: 1000px) {
+    #intro > section {
+        column-count: 1;
+    }
+}
+
+
+/* EFECT: text defilant */
+#banner-defilare {
+    overflow: hidden;
+    background-color: var(--culoare-text);
+    color: var(--culoare-fundal);
+    padding: 0.4rem 0;
+    font-size: 0.9rem;
+}
+
+#banner-defilare span {
+    display: inline-block;
+    white-space: nowrap;
+    animation: defilare 22s linear infinite;
+}
+
+@keyframes defilare {
+    from { transform: translateX(100vw); }
+    to   { transform: translateX(-100%); }
+}
+
+
+/* EFECT: background-attachment fix cu animatie */
+#fundal-fix {
+    min-height: 280px;
+    background-image: url('/resurse/imagini/woman-petting-adorable-dog.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    animation: schimbaFundal 12s linear infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--culoare-fundal);
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+@keyframes schimbaFundal {
+    0%   { background-image: url('/resurse/imagini/woman-petting-adorable-dog.jpg'); }
+    34%  { background-image: url('/resurse/imagini/max-mare.jpg'); }
+    67%  { background-image: url('/resurse/imagini/luna.jpg'); }
+}
+
+
+/* Tabel responsive + tabel transpus doar in pagina Despre */
+.pagina-despre {
+    grid-template-columns: minmax(24rem, 30rem) minmax(0, 1fr);
+    grid-template-areas: none;
+    align-items: start;
+}
+
+#despre-prezentare {
+    grid-column: 1;
+    align-self: start;
+}
+
+.pagina-despre #tabel-adoptat {
+    grid-column: 2;
+    grid-row: 1;
+    width: min(100%, 64rem);
+    justify-self: center;
+    align-self: start;
+}
+
+.pagina-despre #tabel-adoptat h3 {
+    margin-top: 0;
+}
+
+#tabel-adoptat {
+    grid-column: 1 / -1;
+}
+
+#tabel-adoptat .tabel-responsiv-container {
+    overflow-x: auto;
+}
+
+#tabel-adoptat #transpus {
+    width: 100%;
+    min-width: 760px;
+}
+
+@media (min-width: 700px) and (max-width: 1000px) {
+    #tabel-adoptat #transpus {
+        display: block;
+        width: max-content;
+        min-width: 100%;
+    }
+    #tabel-adoptat #transpus caption {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0 0 0.75rem;
+        padding: 0;
+        background: none;
+        border: none;
+        text-align: left;
+        white-space: normal;
+    }
+    #tabel-adoptat #transpus thead,
+    #tabel-adoptat #transpus tbody,
+    #tabel-adoptat #transpus tr {
+        display: block;
+        float: left;
+    }
+    #tabel-adoptat #transpus th,
+    #tabel-adoptat #transpus td {
+        display: block;
+        border: 1px solid var(--culoare-border);
+        padding: 0.4rem 0.75rem;
+        white-space: nowrap;
+    }
+    #tabel-adoptat #transpus td + td,
+    #tabel-adoptat #transpus th + th {
+        border-top: none;
+    }
+    /* border-collapse nu ajuta aici; elementele nu mai sunt afisate ca tabel. */
+    #tabel-adoptat #transpus tbody td {
+        border-left: none;
+    }
+    #tabel-adoptat #transpus::after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+}
+
+@media (max-width: 1000px) {
+    .pagina-despre {
+        grid-template-columns: 1fr;
+        grid-template-areas: none;
+    }
+
+    #despre-prezentare,
+    .pagina-despre #tabel-adoptat {
+        grid-column: 1;
+        grid-row: auto;
+        width: 100%;
+        justify-self: stretch;
+        align-self: start;
+    }
+}
+
+
+/* EFECT: stilizare hr */
+hr.hr-decorat {
+    position: relative;
+    display: block;
+    width: min(78%, 28rem);
+    height: 0;
+    border: none;
+    border-top: 0.18rem solid var(--culoare-highlight);
+    margin: 1.75rem auto 1.5rem;
+    overflow: visible;
+}
+
+hr.hr-decorat::before,
+hr.hr-decorat::after {
+    content: "\2733";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    line-height: 1;
+    font-size: 1.15rem;
+    color: var(--culoare-highlight);
+}
+
+hr.hr-decorat::before {
+    right: calc(100% + 0.4rem);
+}
+
+hr.hr-decorat::after {
+    left: calc(100% + 0.4rem);
 }

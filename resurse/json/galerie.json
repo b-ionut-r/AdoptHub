@@ -1,0 +1,156 @@
+{
+  "cale_galerie": "resurse/imagini/galerie",
+  "imagini": [
+    {
+      "cale_imagine": "contact-uman.jpg",
+      "titlu": "Contact bland",
+      "descriere": "Apropierea fara tragere sau agitatie e un semn bun pentru primele minute ale vizitei.",
+      "timp": "08:00-18:00",
+      "alt": "Persoana care tine bland un caine la piept"
+    },
+    {
+      "cale_imagine": "adoptable-dog-pd.jpg",
+      "titlu": "Privire deschisa",
+      "descriere": "Cand mentine contact vizual si ramane relaxat, cainele raspunde bine la interactiune.",
+      "timp": "10:00-20:00",
+      "alt": "Caine alb-negru cu bandana portocalie, fotografiat pe iarba",
+      "atribuirie": {
+        "autor": "Alachua County",
+        "sursa": "https://commons.wikimedia.org/wiki/File:Adoptable_dog_(44006495232).jpg",
+        "licenta": "Public domain"
+      }
+    },
+    {
+      "cale_imagine": "dog-at-shelter-ccby.jpg",
+      "titlu": "Incredere castigata",
+      "descriere": "Un nas apropiat de mana, chiar si prin gard, arata ca frica poate fi depasita.",
+      "timp": "12:00-22:00",
+      "alt": "Caine din adapost care atinge o mana prin gard",
+      "atribuirie": {
+        "autor": "Erick Pleitez",
+        "sursa": "https://commons.wikimedia.org/wiki/File:Dog_at_shelter.jpg",
+        "licenta": "CC BY 2.0"
+      }
+    },
+    {
+      "cale_imagine": "luna-odihna.jpg",
+      "titlu": "Pauza fara stres",
+      "descriere": "O pisica ce se intinde linistit in prezenta ta are de obicei un ritm mai usor de citit.",
+      "timp": "13:00-23:59",
+      "alt": "Pisica tigrata relaxata, fotografiata de aproape"
+    },
+    {
+      "cale_imagine": "longhaired-cat-shelter.jpg",
+      "titlu": "Curiozitate calma",
+      "descriere": "Privirea stabila si corpul relaxat sugereaza interes, nu defensiva.",
+      "timp": "06:00-16:00",
+      "alt": "Pisica alb cu maro, fotografiata intr-un adapost",
+      "atribuirie": {
+        "autor": "Noah Wulf",
+        "sursa": "https://commons.wikimedia.org/wiki/File:Longhaired_Cat_at_Hearts_Alive_Village.jpg",
+        "licenta": "CC BY-SA 3.0"
+      }
+    },
+    {
+      "cale_imagine": "dogs-playing-ccbysa.jpg",
+      "titlu": "Joaca sociala",
+      "descriere": "Schimbul echilibrat in joc ajuta cand cauti un animal sociabil si energic.",
+      "timp": "09:00-19:00",
+      "alt": "Doi caini golden retriever care trag de aceeasi jucarie",
+      "atribuirie": {
+        "autor": "Brandt Luke Zorn",
+        "sursa": "https://commons.wikimedia.org/wiki/File:Dogs_playing.JPG",
+        "licenta": "CC BY-SA 2.0"
+      }
+    },
+    {
+      "cale_imagine": "rescued-cat-cc0.jpg",
+      "titlu": "Toleranta la transport",
+      "descriere": "Felul in care suporta o cutie de transport conteaza mult in primele drumuri spre casa.",
+      "timp": "07:00-15:00",
+      "alt": "Pisica deschisa la culoare intr-o cutie de transport",
+      "atribuirie": {
+        "autor": "U.S. Geological Survey",
+        "sursa": "https://commons.wikimedia.org/wiki/File:Rescued_Cat_(2594331878).jpg",
+        "licenta": "CC0"
+      }
+    },
+    {
+      "cale_imagine": "doi-caini.jpg",
+      "titlu": "Start jucaus",
+      "descriere": "Puii curiosi si cooperanti se adapteaza repede la sesiuni scurte de cunoastere.",
+      "timp": "08:00-14:00",
+      "alt": "Doi catei aurii asezati unul langa altul pe iarba"
+    },
+    {
+      "cale_imagine": "caine-iarba.jpg",
+      "titlu": "Asteptare rabdatoare",
+      "descriere": "Un caine care poate sta pe loc si observa mediul e mai usor de integrat in rutina zilnica.",
+      "timp": "11:00-21:00",
+      "alt": "Caine auriu asezat langa un perete, privind spre camera"
+    },
+    {
+      "cale_imagine": "pisoi-alb-negru.jpg",
+      "titlu": "Somn fara graba",
+      "descriere": "Cand adoarme aproape de tine sau pe o patura cunoscuta, nivelul de confort e deja bun.",
+      "timp": "20:00-08:00",
+      "alt": "Pisica alb-negru adormita pe o perna albastra"
+    },
+    {
+      "cale_imagine": "caine-culcat.jpg",
+      "titlu": "Rabdare inainte de schimbare",
+      "descriere": "Un caine care poate ramane relaxat si culcat in preajma oamenilor indica un nivel bun de confort.",
+      "timp": "16:00-23:59",
+      "alt": "Caine culcat pe gazon, privind in lateral"
+    },
+    {
+      "cale_imagine": "caine-linistit.jpg",
+      "titlu": "Calm si echilibru",
+      "descriere": "Atitudinea calma face mai usoara apropierea si primele interactiuni cu un posibil adoptator.",
+      "timp": "07:00-17:00",
+      "alt": "Caine linistit, surprins in exterior"
+    },
+    {
+      "cale_imagine": "catel-credit.png",
+      "titlu": "Portret prietenos",
+      "descriere": "Un cadru simplu, util pentru a pune accent pe expresie si pe contactul vizual.",
+      "timp": "10:00-18:00",
+      "alt": "Catel fotografiat frontal"
+    },
+    {
+      "cale_imagine": "miki-salut.jpg",
+      "titlu": "Salut jucaus",
+      "descriere": "Un salut relaxat transmite energie buna si disponibilitate pentru socializare.",
+      "timp": "09:00-15:00",
+      "alt": "Caine saluta prin ridicarea unei labe"
+    },
+    {
+      "cale_imagine": "pisoi-somnoros.jpg",
+      "titlu": "Odihna sigura",
+      "descriere": "Somnul in apropierea unui spatiu familiar arata incredere si reducerea stresului.",
+      "timp": "22:00-10:00",
+      "alt": "Pisoi somnoros intins pe o patura"
+    },
+    {
+      "cale_imagine": "portret-caine.jpg",
+      "titlu": "Portret orientativ",
+      "descriere": "O imagine buna pentru a urmari expresia si postura unui caine inainte de adoptie.",
+      "timp": "00:00-23:59",
+      "alt": "Portret de caine fotografiat din fata"
+    },
+    {
+      "cale_imagine": "pui-curios.jpg",
+      "titlu": "Curiozitate activa",
+      "descriere": "Un pui curios exploreaza mai repede mediul si se adapteaza usor la interactiuni noi.",
+      "timp": "08:00-12:00",
+      "alt": "Pui de caine curios, aproape de camera"
+    },
+    {
+      "cale_imagine": "pui-mic.jpg",
+      "titlu": "Adaptare usoara",
+      "descriere": "Puii mici au nevoie de ritm, dar reactioneaza foarte bine la calm si rutina.",
+      "timp": "06:00-20:00",
+      "alt": "Pui mic de caine pe iarba"
+    }
+  ]
+}

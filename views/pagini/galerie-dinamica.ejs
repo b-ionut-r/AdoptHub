@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <title>AdoptHub | Galerie dinamică</title>
+    <meta name="description" content="Galerie animată AdoptHub cu număr variabil de imagini.">
+    <meta name="keywords" content="galerie animata, adopthub, clip-path, animale">
+    <%- include('../fragmente/head.ejs') %>
+    <link rel="stylesheet" href="/resurse/css/galerie-animata.css?v=<%= timestampCss %>">
+</head>
+<body id="top">
+    <%- include('../fragmente/header.ejs') %>
+    <main>
+        <section id="sectiune-galerie-animata">
+            <div class="titlu-galerii-wrapper">
+                <h2>O privire continuă: Poveștile lor</h2>
+                <p class="info-galerie">
+                    La fiecare vizită, platforma generează o nouă selecție fluidă (<strong><%= galerieAnimata.nr_imagini %> imagini acum</strong>).
+                    Lasă-te purtat de aceste momente și oprește animația trecând cu cursorul pe deasupra pentru a le admira în detaliu.
+                </p>
+            </div>
+
+            <div id="galerie-animata" class="galerie-a" aria-label="Galerie animată AdoptHub">
+                <% galerieAnimata.imagini.forEach(function(imagine) { %>
+                    <figure>
+                        <picture>
+                            <source media="(max-width: 1000px)" srcset="<%= imagine.sursa_mediu %>">
+                            <img
+                                src="<%= imagine.sursa %>"
+                                alt="<%= imagine.alt_final %>"
+                                title="<%= imagine.title_final %>"
+                                width="760"
+                                height="570">
+                        </picture>
+                        <figcaption><%= imagine.titlu %></figcaption>
+                    </figure>
+                <% }) %>
+            </div>
+        </section>
+    </main>
+    <%- include('../fragmente/footer.ejs') %>
+</body>
+</html>

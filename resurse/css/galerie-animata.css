@@ -1,0 +1,132 @@
+#sectiune-galerie-animata {
+  grid-column: 1/-1;
+  padding-inline: var(--margine-pagina);
+}
+
+#galerie-animata {
+  width: min(80vw, 900px);
+  aspect-ratio: 4/3;
+  position: relative;
+  overflow: hidden;
+  margin: 1.5rem auto 2.5rem;
+  border: 18px solid transparent;
+  border-image-source: url("/resurse/imagini/galerie/portret-caine.jpg");
+  border-image-slice: 32;
+  border-image-repeat: round;
+  box-shadow: 0 18px 32px rgba(58, 44, 35, 0.22);
+  background: #1e3f5a;
+}
+
+#galerie-animata figure {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  animation-name: galerie-animata;
+  animation-duration: 24s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
+  transform-origin: center center;
+}
+
+#galerie-animata picture,
+#galerie-animata img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#galerie-animata img {
+  object-fit: cover;
+}
+
+#galerie-animata figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.4rem 0.75rem;
+  background: rgba(255, 255, 255, 0.82);
+  text-align: center;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+#galerie-animata:hover figure {
+  animation-play-state: paused;
+}
+
+#galerie-animata figure:nth-of-type(1) {
+  animation-delay: -24s;
+}
+
+#galerie-animata figure:nth-of-type(2) {
+  animation-delay: -21s;
+}
+
+#galerie-animata figure:nth-of-type(3) {
+  animation-delay: -18s;
+}
+
+#galerie-animata figure:nth-of-type(4) {
+  animation-delay: -15s;
+}
+
+#galerie-animata figure:nth-of-type(5) {
+  animation-delay: -12s;
+}
+
+#galerie-animata figure:nth-of-type(6) {
+  animation-delay: -9s;
+}
+
+#galerie-animata figure:nth-of-type(7) {
+  animation-delay: -6s;
+}
+
+#galerie-animata figure:nth-of-type(8) {
+  animation-delay: -3s;
+}
+
+@keyframes galerie-animata {
+  0% {
+    opacity: 1;
+    z-index: 10;
+    clip-path: polygon(0 0, 100% 0, 0 100%, 0 0, 100% 100%, 100% 0, 0 100%, 100% 100%);
+  }
+  6.25% {
+    opacity: 1;
+    z-index: 10;
+    clip-path: polygon(0 0, 100% 0, 0 100%, 0 0, 100% 100%, 100% 0, 0 100%, 100% 100%);
+  }
+  12.5% {
+    opacity: 1;
+    z-index: 10;
+    clip-path: polygon(0 0, 0 0, 0 0, 0 0, 100% 100%, 100% 100%, 100% 100%, 100% 100%);
+  }
+  12.501% {
+    opacity: 0;
+    z-index: -10;
+    clip-path: polygon(0 0, 0 0, 0 0, 0 0, 100% 100%, 100% 100%, 100% 100%, 100% 100%);
+  }
+  87.5% {
+    opacity: 0;
+    z-index: -10;
+    clip-path: polygon(0 0, 100% 0, 0 100%, 0 0, 100% 100%, 100% 0, 0 100%, 100% 100%);
+  }
+  87.501% {
+    opacity: 1;
+    z-index: 0;
+    clip-path: polygon(0 0, 100% 0, 0 100%, 0 0, 100% 100%, 100% 0, 0 100%, 100% 100%);
+  }
+  100% {
+    opacity: 1;
+    z-index: 0;
+    clip-path: polygon(0 0, 100% 0, 0 100%, 0 0, 100% 100%, 100% 0, 0 100%, 100% 100%);
+  }
+}
+@media (max-width: 1000px) {
+  #sectiune-galerie-animata {
+    display: none;
+  }
+}
