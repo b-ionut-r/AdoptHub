@@ -9,6 +9,7 @@ window.onload = function() {
     let selTalie    = document.getElementById("sel-talie");
     let selSpecie   = document.getElementById("sel-specie");
     let cbRecent    = document.getElementById("cb-recent");
+    let cbSalveaza  = document.getElementById("cb-salveaza");
 
     inpEnergie.oninput = function() {
         energieVal.innerHTML = this.value;
@@ -35,6 +36,41 @@ window.onload = function() {
         let ok = valideazaNume() & valideazaTrasaturi();
         if (!ok) alert("Corectați câmpurile marcate cu roșu înainte de a continua.");
         return !!ok;
+    }
+
+    function salveazaFiltre() {
+        let speciiSel = Array.from(selSpecie.options).filter(o => o.selected).map(o => o.value);
+        let vaccinat = "";
+        for (let r of document.getElementsByName("gr-vaccinat")) if (r.checked) { vaccinat = r.value; break; }
+        localStorage.setItem("adopthub_filtru", JSON.stringify({
+            nume:      inpNume.value,
+            energie:   inpEnergie.value,
+            locatie:   inpLocatie.value,
+            talie:     selTalie.value,
+            vaccinat,
+            recent:    cbRecent.checked,
+            trasaturi: taTrasaturi.value,
+            specii:    speciiSel
+        }));
+    }
+
+    function incarcaFiltre() {
+        let raw = localStorage.getItem("adopthub_filtru");
+        if (!raw) return;
+        let f = JSON.parse(raw);
+        inpNume.value        = f.nume      || "";
+        inpEnergie.value     = f.energie   || 1;
+        energieVal.innerHTML = f.energie   || "1";
+        inpLocatie.value     = f.locatie   || "";
+        selTalie.value       = f.talie     || "oricare";
+        cbRecent.checked     = !!f.recent;
+        taTrasaturi.value    = f.trasaturi || "";
+        if (f.specii && f.specii.length)
+            for (let o of selSpecie.options) o.selected = f.specii.includes(o.value);
+        for (let r of document.getElementsByName("gr-vaccinat"))
+            r.checked = (r.value === (f.vaccinat || "toate"));
+        cbSalveaza.checked = true;
+        document.getElementById("btn-filtrare").click();
     }
 
     document.getElementById("btn-filtrare").onclick = function() {
@@ -80,6 +116,7 @@ window.onload = function() {
 
             prod.style.display = cond ? "" : "none";
         }
+        if (cbSalveaza.checked) salveazaFiltre();
     };
 
     function sorteaza(semn) {
@@ -116,7 +153,13 @@ window.onload = function() {
         setTimeout(function() { div.remove(); }, 2000);
     };
 
-    let ordineInitiala = Array.from(document.getElementsByClassName("animal")).map(p => p.id);
+    let cards = Array.from(document.getElementsByClassName("animal"));
+    for (let i = 0; i < cards.length; i++) {
+        setTimeout(function(card) { card.classList.add("vizibil"); }, (i + 1) * 100, cards[i]);
+    }
+
+    let ordineInitiala = cards.map(p => p.id);
+    incarcaFiltre();
 
     document.getElementById("btn-reset").onclick = function() {
         if (!confirm("Resetezi toate filtrele?")) return;
@@ -130,6 +173,8 @@ window.onload = function() {
 
         for (let r of document.getElementsByName("gr-vaccinat")) r.checked = (r.value === "toate");
         for (let o of selSpecie.options) o.selected = true;
+        cbSalveaza.checked = false;
+        localStorage.removeItem("adopthub_filtru");
 
         let container = document.getElementById("grid-animale");
         let map = {};

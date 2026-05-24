@@ -4,22 +4,18 @@ const fs = require("fs");
 const ejs = require("ejs");
 const sharp = require("sharp");
 const sass = require("sass");
-const pg = require("pg");
+const AccesBD = require("./module_proprii/accesBD.js");
+const AccesBDSequelize = require("./module_proprii/sequelize.js");
 
 const app = express();
 app.set("view engine", "ejs");
 
-const client = new pg.Client({
-    database: "adopthub_web",
-    user: "adopthub_web",
-    password: "adopthub2025",
-    host: "localhost",
-    port: 5432
-});
-client.connect(function(err) {
-    if (err) console.error("Eroare conectare BD:", err.message);
-    else console.log("Conectat la baza de date adopthub_web.");
-});
+const acces = AccesBD.getInstanta({ init: "local" });
+const client = acces.getClient();
+console.log("Conectat la baza de date adopthub_web.");
+
+const orm = AccesBDSequelize.getInstanta();
+const { Animal } = orm;
 
 let speciiDisponibile = [];
 client.query("SELECT unnest(enum_range(null::specie_enum))::text AS specie", function(err, rez) {
@@ -427,33 +423,56 @@ app.get("/galerie-dinamica", async function(req, res) {
     }
 });
 
-app.get("/animale", function(req, res) {
+// app.get("/animale", function(req, res) {
+//     let specie = req.query.specie;
+//     let comanda, parametri;
+//     if (specie) {
+//         comanda = "SELECT * FROM animal WHERE adoptat=false AND specie=$1::specie_enum ORDER BY id";
+//         parametri = [specie];
+//     } else {
+//         comanda = "SELECT * FROM animal WHERE adoptat=false ORDER BY id";
+//         parametri = [];
+//     }
+//     client.query(comanda, parametri, function(err, rez) {
+//         if (err) { afisareEroare(res); return; }
+//         res.render("pagini/animale", {
+//             animale: rez.rows,
+//             specieSelectata: specie || "toate"
+//         });
+//     });
+// });
+
+app.get("/animale", async function(req, res) {
     let specie = req.query.specie;
-    let comanda, parametri;
-    if (specie) {
-        comanda = "SELECT * FROM animal WHERE adoptat=false AND specie=$1::specie_enum ORDER BY id";
-        parametri = [specie];
-    } else {
-        comanda = "SELECT * FROM animal WHERE adoptat=false ORDER BY id";
-        parametri = [];
-    }
-    client.query(comanda, parametri, function(err, rez) {
-        if (err) { afisareEroare(res); return; }
+    try {
+        let where = { adoptat: false };
+        if (specie) where.specie = specie;
+        let animale = await Animal.findAll({ where, order: [["id", "ASC"]] });
         res.render("pagini/animale", {
-            animale: rez.rows,
+            animale: animale.map(a => a.dataValues),
             specieSelectata: specie || "toate"
         });
-    });
+    } catch (err) { console.error(err); afisareEroare(res); }
 });
 
-app.get("/animal/:id", function(req, res) {
+// app.get("/animal/:id", function(req, res) {
+//     let id = parseInt(req.params.id);
+//     if (isNaN(id)) { afisareEroare(res, 404); return; }
+//     client.query("SELECT * FROM animal WHERE id=$1", [id], function(err, rez) {
+//         if (err) { afisareEroare(res); return; }
+//         if (rez.rowCount === 0) { afisareEroare(res, 404); return; }
+//         res.render("pagini/animal", { animal: rez.rows[0] });
+//     });
+// });
+
+app.get("/animal/:id", async function(req, res) {
     let id = parseInt(req.params.id);
     if (isNaN(id)) { afisareEroare(res, 404); return; }
-    client.query("SELECT * FROM animal WHERE id=$1", [id], function(err, rez) {
-        if (err) { afisareEroare(res); return; }
-        if (rez.rowCount === 0) { afisareEroare(res, 404); return; }
-        res.render("pagini/animal", { animal: rez.rows[0] });
-    });
+    try {
+        let animal = await Animal.findByPk(id);
+        if (!animal) { afisareEroare(res, 404); return; }
+        res.render("pagini/animal", { animal: animal.dataValues });
+    } catch (err) { console.error(err); afisareEroare(res); }
 });
 
 // Ruta generică — trebuie să fie ultima

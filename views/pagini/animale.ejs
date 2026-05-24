@@ -115,6 +115,13 @@
                     <i class="bi bi-arrow-counterclockwise"></i>
                     <span class="d-none d-md-inline"> Resetare</span>
                 </button>
+                <div class="d-flex align-items-center gap-1">
+                    <input type="checkbox" class="btn-check" id="cb-salveaza">
+                    <label class="btn btn-outline-success btn-sm" for="cb-salveaza">
+                        <i class="bi bi-floppy"></i>
+                        <span class="d-none d-md-inline"> Salvează filtrare</span>
+                    </label>
+                </div>
             </div>
 
         </div>
@@ -122,7 +129,7 @@
 
     <div id="grid-animale">
         <% for (let a of locals.animale) { %>
-            <article id="elem_<%= a.id %>" class="animal <%= a.specie %> <%= a.talie %>"
+            <article id="elem_<%= a.id %>" class="card animal <%= a.specie %> <%= a.talie %>"
                      data-nume="<%= a.nume %>"
                      data-varsta="<%= a.varsta_luni %>"
                      data-locatie="<%= a.locatie %>"
@@ -132,21 +139,28 @@
                      data-vaccinat="<%= a.vaccinat %>"
                      data-talie="<%= a.talie %>"
                      data-specie="<%= a.specie %>">
-                <h3><a href="/animal/<%= a.id %>"><%= a.nume %></a></h3>
-                <div class="continut-animal">
-                    <table>
-                        <tr><td>Vârstă</td><td><%= a.varsta_luni %> luni</td></tr>
-                        <tr><td>Nivel energie</td><td><%= a.nivel_energie %>/10</td></tr>
-                        <tr><td>Talie</td><td><%= a.talie.replace('_', ' ') %></td></tr>
-                        <tr><td>Culoare</td><td><%= a.culoare %></td></tr>
-                        <tr><td>Trăsături</td><td><%= a.trasaturi %></td></tr>
-                        <tr><td>Înregistrat</td><td><time datetime="<%= new Date(a.data_inregistrare).toISOString().slice(0,10) %>"><%= formateazaData(a.data_inregistrare) %></time></td></tr>
-                        <tr><td>Vaccinat</td><td><%= a.vaccinat ? 'da' : 'nu' %></td></tr>
-                    </table>
-                    <img src="/resurse/imagini/animale/<%= a.cale_imagine %>" alt="[imagine <%= a.nume %>]" onerror="this.src='/resurse/imagini/galerie/portret-caine.jpg'">
+                <div class="card-body">
+                    <h3 class="card-title"><a href="/animal/<%= a.id %>"><%= a.nume %></a></h3>
+                    <div class="continut-animal">
+                        <table>
+                            <tr><td>Vârstă</td><td><%= a.varsta_luni %> luni</td></tr>
+                            <tr><td>Nivel energie</td><td><%= a.nivel_energie %>/10</td></tr>
+                            <tr><td>Talie</td><td><%= a.talie.replace('_', ' ') %></td></tr>
+                            <tr><td>Culoare</td><td><%= a.culoare %></td></tr>
+                            <tr><td>Trăsături</td><td><%= a.trasaturi %></td></tr>
+                            <tr><td>Înregistrat</td><td><time datetime="<%= new Date(a.data_inregistrare).toISOString().slice(0,10) %>"><%= formateazaData(a.data_inregistrare) %></time></td></tr>
+                            <tr><td>Vaccinat</td><td><%= a.vaccinat ? 'da' : 'nu' %></td></tr>
+                        </table>
+                        <img src="/resurse/imagini/animale/<%= a.cale_imagine %>" alt="[imagine <%= a.nume %>]" onerror="this.src='/resurse/imagini/galerie/portret-caine.jpg'">
+                    </div>
+                    <p class="descriere card-text"><%= a.descriere %></p>
+                    <p class="categorie-animale">Specie: <span class="val-specie"><%= (locals.numeSpecii || {})[a.specie] || a.specie %></span></p>
                 </div>
-                <p class="descriere"><%= a.descriere %></p>
-                <p class="categorie-animale">Specie: <span class="val-specie"><%= (locals.numeSpecii || {})[a.specie] || a.specie %></span></p>
+                <div class="card-footer">
+                    <a href="/animal/<%= a.id %>" class="btn btn-primary btn-sm">
+                        <i class="bi bi-box-arrow-up-right"></i> Vezi detalii
+                    </a>
+                </div>
             </article>
         <% } %>
     </div>

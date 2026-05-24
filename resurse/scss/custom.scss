@@ -93,6 +93,66 @@ a[href^="http"]::before {
     grid-column: 1 / -1;
 }
 
+// Banner cookies
+@keyframes banner-intra {
+    0%   { transform: translateX(-100%); background-color: #c96b43; border-top-color: #3a2c23; }
+    50%  { transform: translateX(0);     background-color: #3a2c23; border-top-color: #5c8a6a; }
+    100% { transform: translateX(0);     background-color: #5c8a6a; border-top-color: #3a2c23; }
+}
+
+@keyframes banner-intra-dark {
+    0%   { transform: translateX(-100%); background-color: #6b3219; border-top-color: #7ab48a; }
+    50%  { transform: translateX(0);     background-color: #1a1310; border-top-color: #2d5c40; }
+    100% { transform: translateX(0);     background-color: #2d5c40; border-top-color: #7ab48a; }
+}
+
+#banner-cookies {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.75rem 1.5rem;
+    z-index: 1050;
+    color: #faf5f0;
+    border-top: 3px solid #3a2c23;
+    font-size: 0.95rem;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    background-color: #5c8a6a;
+
+    &.vizibil {
+        display: flex;
+        animation: banner-intra 5s ease forwards;
+
+        @media (max-width: 999px) {
+            animation: none;
+            background-color: #5c8a6a;
+            border-top-color: #3a2c23;
+            transform: none;
+        }
+    }
+}
+
+html[data-tema="dark"] #banner-cookies.vizibil {
+    animation-name: banner-intra-dark;
+
+    @media (max-width: 999px) {
+        background-color: #2d5c40;
+        border-top-color: #7ab48a;
+    }
+}
+
+// Când bannerul e vizibil: împinge conținutul în sus și ridică butonul scroll-top
+body.banner-vizibil {
+    padding-bottom: 3.5rem;
+
+    #link-top {
+        bottom: calc(2rem + 3.5rem);
+    }
+}
+
 // --- Stilizare HR (Efect CSS) ---
 hr.hr-stelute {
     border: none;

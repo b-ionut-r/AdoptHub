@@ -36,5 +36,8 @@
     </article>
 </main>
 <%- include('../fragmente/footer.ejs') %>
+<script>
+document.cookie = "ultimul_animal=" + encodeURIComponent("<%= animal.id %>|<%= animal.nume %>") + "; max-age=86400; path=/";
+</script>
 </body>
 </html>

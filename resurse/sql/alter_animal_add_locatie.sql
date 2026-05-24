@@ -1,5 +1,5 @@
--- Rulat ca superuser: psql -U postgres -d adopthub_web -f alter_animal_add_locatie.sql
--- Pe Windows: deschide cmd, ruleaza "chcp 65001" inainte, sau lasa \encoding UTF8 sa se ocupe.
+--Rulat ca superuser: psql -U postgres -d adopthub_web -f alter_animal_add_locatie.sql
+--Pe Windows: deschide cmd, ruleaza "chcp 65001" inainte, sau lasa \encoding UTF8 sa se ocupe.
 
 \encoding UTF8
 \connect adopthub_web
