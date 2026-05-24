@@ -19,6 +19,8 @@ body {
 #hamburger  { @extend %ascuns; }
 #nav-close  { @extend %ascuns; }
 
+
+// ecran mare
 @keyframes sub-apare {
     from { opacity: $nul; transform: scale($nul, $nul); }
     to   { opacity: 1;    transform: scale(1, 1); }
@@ -27,6 +29,8 @@ body {
     from { opacity: 0; transform: translateY(-6px); }
     to   { opacity: 1; transform: translateY(0); }
 }
+
+// ecran mic
 @keyframes bara-apare {
     0%   { opacity: 0; transform: scaleX(0); background-color: var(--culoare-accent); }
     60%  { opacity: 0.6; transform: scaleX(1.1); background-color: var(--culoare-highlight); }
@@ -44,6 +48,7 @@ nav ul {
     display: flex;
     justify-content: center;
 
+    // submeniuri ecran mare
     ul {
         @extend %reset-lista;
         display: none;

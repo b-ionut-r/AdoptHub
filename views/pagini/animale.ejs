@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <title>AdoptHub | Animale disponibile</title>
+    <meta name="description" content="Caută și filtrează animale disponibile pentru adopție.">
+    <%- include('../fragmente/head.ejs') %>
+    <link rel="stylesheet" href="/resurse/css/animale.css">
+</head>
+<body id="top">
+<%- include('../fragmente/header.ejs') %>
+<main class="pagina-animale">
+    <h2>Animale disponibile pentru adopție</h2>
+    <% if (locals.specieSelectata !== 'toate') { %>
+        <p class="filtru-server">Se afișează: <strong><%= (locals.numeSpecii || {})[specieSelectata] || specieSelectata %></strong></p>
+    <% } %>
+
+    <div id="sectiune-filtre" class="border rounded p-3 mb-4">
+        <div class="row g-2 align-items-start">
+
+            <div class="col-12 col-md-6">
+                <label for="inp-nume" class="form-label">Nume animal:</label>
+                <input type="text" class="form-control form-control-sm" id="inp-nume" placeholder="ex: Max">
+                <div class="invalid-feedback">Numele trebuie să conțină doar litere și spații.</div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <label for="inp-energie" class="form-label">Nivel energie minim:</label>
+                <div class="d-flex align-items-center gap-2">
+                    <span>1</span>
+                    <input type="range" class="form-range" id="inp-energie" min="1" max="10" step="1" value="1">
+                    <span>10 (<strong><span id="energie-val">1</span></strong>)</span>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <label for="inp-locatie" class="form-label">Locație:</label>
+                <input type="text" class="form-control form-control-sm" id="inp-locatie" list="list-locatii" placeholder="oricare">
+                <datalist id="list-locatii">
+                    <option value="București">
+                    <option value="Cluj-Napoca">
+                    <option value="Iași">
+                    <option value="Timișoara">
+                    <option value="Brașov">
+                    <option value="Constanța">
+                </datalist>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <label for="sel-talie" class="form-label">Talie:</label>
+                <select class="form-select form-select-sm" id="sel-talie">
+                    <option value="oricare" selected>oricare</option>
+                    <option value="mica">Mică</option>
+                    <option value="medie">Medie</option>
+                    <option value="mare">Mare</option>
+                    <option value="foarte_mare">Foarte mare</option>
+                </select>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <label class="form-label d-block">Vaccinat:</label>
+                <div class="btn-group btn-group-sm" role="group" aria-label="Filtru vaccinat">
+                    <input type="radio" class="btn-check" name="gr-vaccinat" id="vac-toate" value="toate" checked>
+                    <label class="btn btn-outline-primary" for="vac-toate">Toate</label>
+                    <input type="radio" class="btn-check" name="gr-vaccinat" id="vac-da" value="da">
+                    <label class="btn btn-outline-primary" for="vac-da">Da</label>
+                    <input type="radio" class="btn-check" name="gr-vaccinat" id="vac-nu" value="nu">
+                    <label class="btn btn-outline-primary" for="vac-nu">Nu</label>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 d-flex align-items-end">
+                <div>
+                    <input type="checkbox" class="btn-check" id="cb-recent">
+                    <label class="btn btn-outline-secondary btn-sm" for="cb-recent">
+                        <i class="bi bi-clock-history"></i> Înregistrat în ultimul an
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="form-floating">
+                    <textarea class="form-control" id="ta-trasaturi" placeholder="ex: dresat, jucauș" style="height:80px"></textarea>
+                    <label for="ta-trasaturi">Trăsături (cuvinte cheie, virgulă-separator)</label>
+                    <div class="invalid-feedback">Trăsăturile trebuie să conțină doar litere, spații și virgule.</div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <label for="sel-specie" class="form-label">Specii (Ctrl+click):</label>
+                <select class="form-select form-select-sm" id="sel-specie" multiple size="3">
+                    <% for (let sp of (locals.speciiDisponibile || [])) { %>
+                        <option value="<%= sp %>" selected><%= (locals.numeSpecii || {})[sp] || sp %></option>
+                    <% } %>
+                </select>
+            </div>
+
+            <div class="col-12 d-flex gap-2 flex-wrap">
+                <button id="btn-filtrare" class="btn btn-primary btn-sm">
+                    <i class="bi bi-funnel-fill"></i>
+                    <span class="d-none d-md-inline"> Filtrează</span>
+                </button>
+                <button id="btn-sort-asc" class="btn btn-secondary btn-sm">
+                    <i class="bi bi-sort-up-alt"></i>
+                    <span class="d-none d-md-inline"> Sortare ↑</span>
+                </button>
+                <button id="btn-sort-desc" class="btn btn-secondary btn-sm">
+                    <i class="bi bi-sort-down-alt"></i>
+                    <span class="d-none d-md-inline"> Sortare ↓</span>
+                </button>
+                <button id="btn-calcul" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-calculator"></i>
+                    <span class="d-none d-md-inline"> Media vârstei</span>
+                </button>
+                <button id="btn-reset" class="btn btn-outline-danger btn-sm">
+                    <i class="bi bi-arrow-counterclockwise"></i>
+                    <span class="d-none d-md-inline"> Resetare</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="grid-animale">
+        <% for (let a of locals.animale) { %>
+            <article id="elem_<%= a.id %>" class="animal <%= a.specie %> <%= a.talie %>"
+                     data-nume="<%= a.nume %>"
+                     data-varsta="<%= a.varsta_luni %>"
+                     data-locatie="<%= a.locatie %>"
+                     data-energie="<%= a.nivel_energie %>"
+                     data-trasaturi="<%= a.trasaturi %>"
+                     data-data="<%= a.data_inregistrare %>"
+                     data-vaccinat="<%= a.vaccinat %>"
+                     data-talie="<%= a.talie %>"
+                     data-specie="<%= a.specie %>">
+                <h3><a href="/animal/<%= a.id %>"><%= a.nume %></a></h3>
+                <div class="continut-animal">
+                    <table>
+                        <tr><td>Vârstă</td><td><%= a.varsta_luni %> luni</td></tr>
+                        <tr><td>Nivel energie</td><td><%= a.nivel_energie %>/10</td></tr>
+                        <tr><td>Talie</td><td><%= a.talie.replace('_', ' ') %></td></tr>
+                        <tr><td>Culoare</td><td><%= a.culoare %></td></tr>
+                        <tr><td>Trăsături</td><td><%= a.trasaturi %></td></tr>
+                        <tr><td>Înregistrat</td><td><time datetime="<%= new Date(a.data_inregistrare).toISOString().slice(0,10) %>"><%= formateazaData(a.data_inregistrare) %></time></td></tr>
+                        <tr><td>Vaccinat</td><td><%= a.vaccinat ? 'da' : 'nu' %></td></tr>
+                    </table>
+                    <img src="/resurse/imagini/animale/<%= a.cale_imagine %>" alt="[imagine <%= a.nume %>]" onerror="this.src='/resurse/imagini/galerie/portret-caine.jpg'">
+                </div>
+                <p class="descriere"><%= a.descriere %></p>
+                <p class="categorie-animale">Specie: <span class="val-specie"><%= (locals.numeSpecii || {})[a.specie] || a.specie %></span></p>
+            </article>
+        <% } %>
+    </div>
+</main>
+<%- include('../fragmente/footer.ejs') %>
+<script src="/resurse/js/animale.js"></script>
+</body>
+</html>

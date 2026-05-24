@@ -47,8 +47,20 @@
         xl: 1140px,
         xxl: 1320px
     ),
+
+    // Range slider: bulina cu 50% mai mare decat font-size html (1rem), culoare personalizata
+    $form-range-thumb-width:  1.5rem,
+    $form-range-thumb-height: 1.5rem,
+    $form-range-track-bg:     #e8bca8,
+
+    // Butoane: grosimea borderului
+    $btn-border-width:        2px,
 );
 
+
+// Variabile locale — aceleasi valori ca in @use, pentru utilizare in restul fisierului
+$primary:  #c96b43;
+$body-bg:  #faf5f0;
 
 // Corectare Bootstrap — restaurare aspect initial al site-ului
 

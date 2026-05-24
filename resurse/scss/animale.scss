@@ -1,0 +1,87 @@
+// Pagina animale
+// main { display: grid 4 col } in general.css — override cu block
+.pagina-animale, .pagina-animal {
+    display: block;
+    padding: 1rem 2rem;
+}
+
+.filtru-server {
+    margin-bottom: 1rem;
+}
+
+#grid-animale {
+    // override main > * border/shadow/padding (nu avem nevoie, cardurile au propriile stiluri)
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+
+    @media (max-width: 900px) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    @media (max-width: 560px) { grid-template-columns: 1fr; }
+}
+
+.animal {
+    border: 1px solid var(--culoare-border);
+    border-radius: 8px;
+    padding: 0.75rem;
+    background: var(--culoare-fundal);
+    box-shadow: 0 2px 4px rgba(0,0,0,.06);
+    min-width: 0;
+
+    h3 { margin-bottom: 0.5rem; a { color: var(--culoare-accent); text-decoration: none; &:hover { text-decoration: underline; } } }
+
+    .continut-animal {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+
+        // cerinta: "In dreapta tabelului va fi afisata imaginea"
+        table {
+            font-size: 0.85rem;
+            min-width: 0;
+            flex: 1;
+            td:first-child { font-weight: 600; white-space: nowrap; padding-right: 0.4rem; }
+        }
+
+        img { width: 180px; min-width: 0; height: 145px; object-fit: cover; border-radius: 6px; flex-shrink: 0; }
+    }
+
+    .descriere { font-size: 0.85rem; color: var(--culoare-text-slab); margin-top: 0.5rem; }
+    .categorie-animale { font-size: 0.8rem; color: var(--culoare-text-slab); margin-top: 0.25rem; }
+}
+
+// Pagina produs unic
+.animal-detalii {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 1rem;
+
+    h2 { margin-bottom: 1rem; }
+
+    .continut-animal-detalii {
+        display: flex;
+        gap: 1.5rem;
+        img { width: 260px; min-width: 0; height: 200px; object-fit: cover; border-radius: 8px; }
+        table { td:first-child { font-weight: 600; padding-right: 1rem; } }
+    }
+
+    .descriere-completa { margin-top: 1rem; }
+}
+
+// Div calcul fix
+#div-calcul {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--culoare-text);
+    color: var(--culoare-fundal);
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0,0,0,.3);
+}

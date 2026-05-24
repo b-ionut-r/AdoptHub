@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <title>AdoptHub | <%= locals.animal.nume %></title>
+    <meta name="description" content="Profil animal: <%= locals.animal.nume %>">
+    <%- include('../fragmente/head.ejs') %>
+    <link rel="stylesheet" href="/resurse/css/animale.css">
+</head>
+<body id="top">
+<%- include('../fragmente/header.ejs') %>
+<main class="pagina-animal">
+    <a href="/animale">&larr; Înapoi la lista de animale</a>
+    <article id="elem_<%= animal.id %>" class="animal-detalii <%= animal.specie %>">
+        <h2><%= animal.nume %></h2>
+        <div class="continut-animal-detalii">
+            <table>
+                <tr><td>Specie</td><td><%= (locals.numeSpecii || {})[animal.specie] || animal.specie %></td></tr>
+                <tr><td>Talie</td><td><%= animal.talie.replace('_', ' ') %></td></tr>
+                <tr><td>Vârstă</td><td><%= animal.varsta_luni %> luni</td></tr>
+                <tr><td>Nivel energie</td><td><%= animal.nivel_energie %>/10</td></tr>
+                <tr><td>Culoare</td><td><%= animal.culoare %></td></tr>
+                <tr><td>Trăsături</td><td><%= animal.trasaturi %></td></tr>
+                <tr><td>Vaccinat</td><td><%= animal.vaccinat ? 'Da' : 'Nu' %></td></tr>
+                <tr><td>Locație</td><td><%= animal.locatie %></td></tr>
+                <tr><td>Adăpost</td><td><%= animal.adapost %></td></tr>
+                <tr><td>Înregistrat</td>
+                    <td><time datetime="<%= new Date(animal.data_inregistrare).toISOString().slice(0,10) %>">
+                        <%= formateazaData(animal.data_inregistrare) %>
+                    </time></td>
+                </tr>
+            </table>
+            <img src="/resurse/imagini/animale/<%= animal.cale_imagine %>" alt="[imagine <%= animal.nume %>]" onerror="this.src='/resurse/imagini/galerie/portret-caine.jpg'">
+        </div>
+        <p class="descriere-completa"><%= animal.descriere %></p>
+        <p class="categorie-animale">Categoria: <strong><%= animal.specie %></strong></p>
+    </article>
+</main>
+<%- include('../fragmente/footer.ejs') %>
+</body>
+</html>

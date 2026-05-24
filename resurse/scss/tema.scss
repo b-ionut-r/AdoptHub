@@ -1,0 +1,78 @@
+// Variabile suplimentare (light default) — text estompat pt elemente din animale.scss
+body {
+    --culoare-text-slab: #6b5044;
+}
+
+// Dark theme: override CSS variables when html[data-tema="dark"]
+html[data-tema="dark"] {
+    // Setează schema de culori native a browser-ului (fix select multiplu și scrollbars)
+    color-scheme: dark;
+
+    // Footer și banner folosesc --culoare-text ca fundal (care devine deschis în dark)
+    footer, #banner-defilare {
+        background-color: var(--culoare-fundal-secundar);
+        color: var(--culoare-text);
+    }
+
+    // Header — portocaliu mai închis pentru contrast mai bun
+    header {
+        background-color: #6b3219;
+    }
+
+    // Select multiplu — browser-ul aplică stilul nativ; forțăm culorile temei
+    select[multiple] {
+        background-color: var(--culoare-fundal);
+        color: var(--culoare-text);
+        border-color: var(--culoare-border);
+    }
+}
+
+html[data-tema="dark"] body {
+    // Variabile custom AdoptHub
+    --culoare-accent:           #e8926a;
+    --culoare-fundal:           #1a1310;
+    --culoare-fundal-secundar:  #2a1f18;
+    --culoare-text:             #ecdfd1;
+    --culoare-border:           #4a3828;
+    --culoare-highlight:        #7ab48a;
+    --culoare-separator-c1:     #7ab48a;
+    --culoare-separator-c2:     #e8926a;
+    --culoare-link-vizitat:     #8a7060;
+    --culoare-text-slab:        #a08878;
+
+    // Variabile Bootstrap — forțează tema dark în componentele Bootstrap
+    --bs-body-bg:               #1a1310;
+    --bs-body-bg-rgb:           26, 19, 16;
+    --bs-body-color:            #ecdfd1;
+    --bs-body-color-rgb:        236, 223, 209;
+    --bs-heading-color:         #ecdfd1;
+    --bs-border-color:          #4a3828;
+    --bs-table-bg:              #1a1310;
+    --bs-table-striped-bg:      #2a1f18;
+    --bs-table-hover-bg:        #2a1f18;
+    --bs-form-check-input-bg:   #2a1f18;
+
+    // Meniu dropdown — --nav-sub-bg foloseste --culoare-text care devine deschis in dark
+    --nav-sub-bg:   var(--culoare-fundal-secundar);
+    --nav-sub-text: var(--culoare-text);
+}
+
+// Tranziție lină la schimbarea temei (ecran mare — pe mic, animatiile sunt dezactivate în general.css)
+@media (min-width: 700px) {
+    body, body * {
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+}
+
+// Switch comutare temă
+header {
+    position: relative;
+}
+
+#wrapper-tema {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    margin: 0;
+    color: var(--culoare-fundal);
+}

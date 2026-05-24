@@ -1,4 +1,10 @@
     <header>
+        <div class="form-check form-switch" id="wrapper-tema">
+            <input class="form-check-input" type="checkbox" role="switch" id="btn-tema" aria-label="Comută tema">
+            <label class="form-check-label" for="btn-tema">
+                <i class="fa-solid fa-moon" id="tema-icon"></i>
+            </label>
+        </div>
         <h1><i class="fa-solid fa-paw"></i> AdoptHub</h1>
         <p>Cea mai căutată platformă pentru adopția animalelor de companie din România.</p>
         <p>IP utilizator: <%- locals.ip %></p>
@@ -19,10 +25,12 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#"><i class="fa-solid fa-paw"></i> <span class="text-nav">Animale</span></a>
+                    <a href="/animale"><i class="fa-solid fa-paw"></i> <span class="text-nav">Animale</span></a>
                     <ul>
-                        <li><a href="/cauta-animale">Caută animale</a></li>
-                        <li><a href="/profil-animal">Profil animal</a></li>
+                        <li><a href="/animale">Toate</a></li>
+                        <% for (let sp of (locals.speciiDisponibile || [])) { %>
+                            <li><a href="/animale?specie=<%= sp %>"><%= (locals.numeSpecii || {})[sp] || sp %></a></li>
+                        <% } %>
                     </ul>
                 </li>
                 <li>

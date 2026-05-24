@@ -4,9 +4,42 @@ const fs = require("fs");
 const ejs = require("ejs");
 const sharp = require("sharp");
 const sass = require("sass");
+const pg = require("pg");
 
 const app = express();
 app.set("view engine", "ejs");
+
+const client = new pg.Client({
+    database: "adopthub_web",
+    user: "adopthub_web",
+    password: "adopthub2025",
+    host: "localhost",
+    port: 5432
+});
+client.connect(function(err) {
+    if (err) console.error("Eroare conectare BD:", err.message);
+    else console.log("Conectat la baza de date adopthub_web.");
+});
+
+let speciiDisponibile = [];
+client.query("SELECT unnest(enum_range(null::specie_enum))::text AS specie", function(err, rez) {
+    if (!err) speciiDisponibile = rez.rows.map(r => r.specie);
+});
+
+const numeSpecii = {
+    caine:   'Câine',
+    pisica:  'Pisică',
+    iepure:  'Iepure',
+    hamster: 'Hamster',
+    altele:  'Alte animale'
+};
+
+const luniRo = ["Ianuarie","Februarie","Martie","Aprilie","Mai","Iunie","Iulie","August","Septembrie","Octombrie","Noiembrie","Decembrie"];
+const zileRo = ["Duminică","Luni","Marți","Miercuri","Joi","Vineri","Sâmbătă"];
+function formateazaData(d) {
+    let data = new Date(d);
+    return `${data.getDate()} ${luniRo[data.getMonth()]} ${data.getFullYear()} (${zileRo[data.getDay()]})`;
+}
 
 console.log("Folder index.js (__dirname):", __dirname);
 console.log("Cale fișier (__filename):", __filename);
@@ -34,9 +67,13 @@ for (let folder of vect_foldere) {
 app.use("/resurse", express.static(path.join(__dirname, "resurse")));
 app.use("/dist", express.static(path.join(__dirname, "node_modules/bootstrap/dist")));
 
-// IP disponibil în toate paginile
+// IP și date globale disponibile în toate paginile
 app.use(function(req, res, next) {
     res.locals.ip = req.ip;
+    res.locals.speciiDisponibile = speciiDisponibile;
+    res.locals.numeSpecii = numeSpecii;
+    res.locals.formateazaData = formateazaData;
+    res.locals.caleCurenta = req.path;
     next();
 });
 
@@ -388,6 +425,35 @@ app.get("/galerie-dinamica", async function(req, res) {
         console.error(err);
         afisareEroare(res);
     }
+});
+
+app.get("/animale", function(req, res) {
+    let specie = req.query.specie;
+    let comanda, parametri;
+    if (specie) {
+        comanda = "SELECT * FROM animal WHERE adoptat=false AND specie=$1::specie_enum ORDER BY id";
+        parametri = [specie];
+    } else {
+        comanda = "SELECT * FROM animal WHERE adoptat=false ORDER BY id";
+        parametri = [];
+    }
+    client.query(comanda, parametri, function(err, rez) {
+        if (err) { afisareEroare(res); return; }
+        res.render("pagini/animale", {
+            animale: rez.rows,
+            specieSelectata: specie || "toate"
+        });
+    });
+});
+
+app.get("/animal/:id", function(req, res) {
+    let id = parseInt(req.params.id);
+    if (isNaN(id)) { afisareEroare(res, 404); return; }
+    client.query("SELECT * FROM animal WHERE id=$1", [id], function(err, rez) {
+        if (err) { afisareEroare(res); return; }
+        if (rez.rowCount === 0) { afisareEroare(res, 404); return; }
+        res.render("pagini/animal", { animal: rez.rows[0] });
+    });
 });
 
 // Ruta generică — trebuie să fie ultima
