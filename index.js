@@ -32,6 +32,11 @@ const numeSpecii = {
 
 const luniRo = ["Ianuarie","Februarie","Martie","Aprilie","Mai","Iunie","Iulie","August","Septembrie","Octombrie","Noiembrie","Decembrie"];
 const zileRo = ["Duminică","Luni","Marți","Miercuri","Joi","Vineri","Sâmbătă"];
+/**
+ * Formatează o dată ca string în română (zi lună an, ziua săptămânii).
+ * @param {string|Date} d - Data de formatat
+ * @returns {string} Data formatată, ex: "15 Martie 2024 (Vineri)"
+ */
 function formateazaData(d) {
     let data = new Date(d);
     return `${data.getDate()} ${luniRo[data.getMonth()]} ${data.getFullYear()} (${zileRo[data.getDay()]})`;
@@ -73,6 +78,11 @@ app.use(function(req, res, next) {
     next();
 });
 
+/**
+ * Verifică proprietăți duplicate în conținutul unui fișier JSON.
+ * @param {string} continut - Conținutul fișierului ca string
+ * @param {string} caleFisier - Calea fișierului (pentru mesajele de eroare)
+ */
 function verificaDuplicateProprietati(continut, caleFisier) {
     let stiva = [], i = 0, n = continut.length;
     while (i < n) {
@@ -92,6 +102,10 @@ function verificaDuplicateProprietati(continut, caleFisier) {
     }
 }
 
+/**
+ * Validează structura și conținutul fișierului erori.json.
+ * Afișează avertismente în consolă dacă structura este incorectă.
+ */
 function verificaErori() {
     let caleFisier = path.join(__dirname, "resurse/json/erori.json");
     if (!fs.existsSync(caleFisier)) {
@@ -144,6 +158,9 @@ function verificaErori() {
 }
 verificaErori();
 
+/**
+ * Încarcă și procesează fișierul erori.json în obGlobal.obErori.
+ */
 function initErori() {
     let continut = fs.readFileSync(path.join(__dirname, "resurse/json/erori.json")).toString("utf-8");
     let erori = obGlobal.obErori = JSON.parse(continut);
@@ -155,15 +172,26 @@ function initErori() {
 }
 initErori();
 
+/**
+ * Încarcă fișierul galerie.json în obGlobal.obGalerie.
+ */
 function initGalerie() {
     let continut = fs.readFileSync(path.join(__dirname, "resurse/json/galerie.json")).toString("utf-8");
     obGlobal.obGalerie = JSON.parse(continut);
 }
 
+/**
+ * Returnează calea web a folderului de galerie (cu slash-uri forward).
+ * @returns {string} Calea web relativă, ex: "/resurse/galerie"
+ */
 function obtineCaleWebGalerie() {
     return "/" + obGlobal.obGalerie.cale_galerie.replace(/\\/g, "/").replace(/^\/+/, "");
 }
 
+/**
+ * Selectează un subset aleatoriu de imagini impare din galerie pentru galeria animată.
+ * @returns {{ nr_imagini: number, imagini: Object[] }} Numărul și lista imaginilor selectate
+ */
 function obtineImaginiGalerieAnimata() {
     let imaginiEligibile = obGlobal.obGalerie.imagini.filter((_, index) => (index + 1) % 2 === 1);
     let nrMaxim = Math.floor(Math.min(14, imaginiEligibile.length) / 2) * 2;
@@ -187,6 +215,12 @@ function obtineImaginiGalerieAnimata() {
     };
 }
 
+/**
+ * Compilează un fișier SCSS template EJS cu date dinamice și îl scrie ca CSS.
+ * @param {string} caleScssTemplate - Calea fișierului .scss template EJS
+ * @param {string} caleCss - Calea de destinație pentru fișierul CSS generat
+ * @param {Object} dateTemplate - Datele injectate în template EJS
+ */
 function compileazaScssDinTemplate(caleScssTemplate, caleCss, dateTemplate) {
     let continutTemplate = fs.readFileSync(caleScssTemplate).toString("utf-8");
     let continutScss = ejs.render(continutTemplate, dateTemplate);
@@ -195,6 +229,10 @@ function compileazaScssDinTemplate(caleScssTemplate, caleCss, dateTemplate) {
     compileazaScss(caleScssTemp, caleCss);
 }
 
+/**
+ * Validează structura și conținutul fișierului galerie.json.
+ * Afișează erori în consolă dacă structura sau imaginile sunt incorecte.
+ */
 function verificaDateGalerie() {
     let caleFisier = path.join(__dirname, "resurse/json/galerie.json");
     if (!fs.existsSync(caleFisier)) {
@@ -240,6 +278,11 @@ function verificaDateGalerie() {
 verificaDateGalerie();
 initGalerie();
 
+/**
+ * Compilează un fișier SCSS în CSS, cu backup automat al versiunii anterioare.
+ * @param {string} caleScss - Calea fișierului SCSS (absolută sau relativă la folderScss)
+ * @param {string} [caleCss] - Calea de destinație CSS; dacă lipsește, se deduce din numele fișierului SCSS
+ */
 function compileazaScss(caleScss, caleCss) {
     if (!path.isAbsolute(caleScss)) {
         caleScss = path.join(obGlobal.folderScss, caleScss);
@@ -283,11 +326,20 @@ fs.watch(obGlobal.folderScss, function(eventType, filename) {
     }
 });
 
+/**
+ * Convertește un text de forma "HH:MM" în numărul total de minute de la miezul nopții.
+ * @param {string} textOra - Ora în format "HH:MM"
+ * @returns {number} Numărul de minute
+ */
 function minuteDinTextOra(textOra) {
     let [ore, minute] = textOra.split(":").map(elem => parseInt(elem, 10));
     return ore * 60 + minute;
 }
 
+/**
+ * Returnează ora curentă ca minute totale și ca string "HH:MM".
+ * @returns {{ minute: number, text: string }}
+ */
 function obtineOraCurentaGalerie() {
     // Pentru verificare se poate inlocui temporar cu o data fixa.
     let dataCurenta = new Date();
@@ -299,6 +351,13 @@ function obtineOraCurentaGalerie() {
     };
 }
 
+/**
+ * Verifică dacă un număr de minute se află într-un interval "HH:MM-HH:MM".
+ * Suportă intervale care trec peste miezul nopții (ex: "22:00-06:00").
+ * @param {number} oraCurentaMinute - Ora curentă exprimată în minute totale
+ * @param {string} interval - Intervalul, ex: "08:00-22:00"
+ * @returns {boolean}
+ */
 function esteInInterval(oraCurentaMinute, interval) {
     let [inceput, sfarsit] = interval.split("-");
     let minuteInceput = minuteDinTextOra(inceput);
@@ -312,6 +371,10 @@ function esteInInterval(oraCurentaMinute, interval) {
     }
 }
 
+/**
+ * Generează variantele redimensionate (mediu, mic) ale imaginilor din galerie, dacă nu există deja.
+ * @returns {Promise<void>}
+ */
 async function genereazaVarianteGalerie() {
     let caleGalerie = path.join(__dirname, obGlobal.obGalerie.cale_galerie);
     let variante = [
@@ -338,6 +401,10 @@ async function genereazaVarianteGalerie() {
     }
 }
 
+/**
+ * Construiește obiectul galerie cu imaginile filtrate după ora curentă.
+ * @returns {Promise<{ ora_curenta: string, imagini: Object[] }>}
+ */
 async function obtineGalerie() {
     await genereazaVarianteGalerie();
 
@@ -362,6 +429,14 @@ async function obtineGalerie() {
     };
 }
 
+/**
+ * Randează pagina de eroare corespunzătoare identificatorului dat.
+ * @param {import('express').Response} res - Obiectul response Express
+ * @param {string|number} [identificator] - Codul erorii din erori.json
+ * @param {string} [titlu] - Titlu personalizat (suprascrie cel din JSON)
+ * @param {string} [text] - Text personalizat
+ * @param {string} [imagine] - Cale imagine personalizată
+ */
 function afisareEroare(res, identificator, titlu, text, imagine) {
     let eroare = obGlobal.obErori.info_erori.find(elem => elem.identificator == identificator);
     let errDefault = obGlobal.obErori.eroare_default;
