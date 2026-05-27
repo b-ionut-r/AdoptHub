@@ -48,8 +48,8 @@ class AccesBDSequelize {
             descriere:         DataTypes.TEXT,
             specie:            DataTypes.STRING,
             locatie:           DataTypes.STRING,
-            adoptat:           DataTypes.BOOLEAN
-        }, { timestamps: false });
+            adapost:           DataTypes.STRING
+        }, { timestamps: false, tableName: "animal" });
 
         this.Utilizator = this._seq.define("utilizatori", {
             id:       { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },

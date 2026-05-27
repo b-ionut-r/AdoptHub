@@ -120,6 +120,28 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate.</p>
         </section>
 
+        <%# Bonus 18: animale noi %>
+        <% if (locals.animaleNoi && animaleNoi.length > 0) { %>
+        <section id="animale-noi">
+            <h2>Animale nou adăugate</h2>
+            <p>Ultimele animale înregistrate pe platformă, în ordinea adăugării.</p>
+            <ul class="lista-animale-noi">
+                <% for (let a of animaleNoi) { %>
+                <li>
+                    <a href="/animal/<%= a.id %>">
+                        <img src="/resurse/imagini/animale/<%= a.cale_imagine %>" alt="<%= a.nume %>" onerror="this.src='/resurse/imagini/galerie/portret-caine.jpg'">
+                        <span class="nou-info">
+                            <strong><%= a.nume %></strong>
+                            <span><%= (locals.numeSpecii || {})[a.specie] || a.specie %>, <%= a.varsta_luni %> luni</span>
+                            <time datetime="<%= new Date(a.data_inregistrare).toISOString().slice(0,10) %>"><%= formateazaData(a.data_inregistrare) %></time>
+                        </span>
+                    </a>
+                </li>
+                <% } %>
+            </ul>
+        </section>
+        <% } %>
+
         <section id="animale-recomandate" class="zona8">
             <h2>Animale recomandate</h2>
             <p>Mai jos ai trei exemple de profiluri, ca să fie ușor de comparat talia, energia și tipul de cămin potrivit.</p>

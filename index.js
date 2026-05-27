@@ -6,6 +6,7 @@ const sharp = require("sharp");
 const sass = require("sass");
 const AccesBD = require("./module_proprii/accesBD.js");
 const AccesBDSequelize = require("./module_proprii/sequelize.js");
+const { Op, QueryTypes } = require("sequelize");
 
 const app = express();
 app.set("view engine", "ejs");
@@ -63,6 +64,22 @@ for (let folder of vect_foldere) {
         fs.mkdirSync(caleFull, { recursive: true });
     }
 }
+
+// Bonus 13: ștergere automată fișiere vechi din backup/
+const T_BACKUP_MIN = 60;
+setInterval(function() {
+    let fb = path.join(__dirname, "backup");
+    fs.readdir(fb, function(err, fisiere) {
+        if (err) return;
+        for (let f of fisiere) {
+            let c = path.join(fb, f);
+            fs.stat(c, function(e, s) {
+                if (!e && Date.now() - s.mtimeMs > T_BACKUP_MIN * 60000)
+                    fs.unlink(c, () => {});
+            });
+        }
+    });
+}, T_BACKUP_MIN * 60000);
 
 // Folder static
 app.use("/resurse", express.static(path.join(__dirname, "resurse")));
@@ -455,9 +472,19 @@ app.get("/favicon.ico", function(req, res) {
 
 app.get(["/", "/index", "/home"], async function(req, res) {
     try {
+        let animaleNoi = [];
+        try {
+            let rows = await Animal.findAll({
+                where: { data_inregistrare: { [Op.gte]: new Date(Date.now() - 365*24*60*60*1000) } },
+                order: [["data_inregistrare", "DESC"]],
+                limit: 5
+            });
+            animaleNoi = rows.map(a => a.dataValues);
+        } catch(e) {}
         res.render("pagini/index", {
             galerie: await obtineGalerie(),
-            afiseazaLinkGalerie: true
+            afiseazaLinkGalerie: true,
+            animaleNoi
         });
     } catch (err) {
         console.error(err);
@@ -467,6 +494,13 @@ app.get(["/", "/index", "/home"], async function(req, res) {
 
 app.get("/despre", function(req, res) {
     res.render("pagini/despre");
+});
+
+/**
+ * Afișează pagina cu adăposturile partenere.
+ */
+app.get("/adaposturi", function(req, res) {
+    res.render("pagini/adaposturi");
 });
 
 app.get(["/galerie", "/galerie-statica"], async function(req, res) {
@@ -520,12 +554,41 @@ app.get("/galerie-dinamica", async function(req, res) {
 app.get("/animale", async function(req, res) {
     let specie = req.query.specie;
     try {
-        let where = { adoptat: false };
+        let where = {};
         if (specie) where.specie = specie;
         let animale = await Animal.findAll({ where, order: [["id", "ASC"]] });
+
+        // Bonus 1: statistici pentru atributele inputurilor
+        let stats = {};
+        let talii = [], locatii = [];
+        try {
+            let rows = await orm.getSequelize().query(
+                `SELECT MIN(nivel_energie) min_e, MAX(nivel_energie) max_e,
+                        COUNT(*) FILTER (WHERE vaccinat=true)  nr_vac,
+                        COUNT(*) FILTER (WHERE vaccinat=false) nr_nevac,
+                        COUNT(*) FILTER (WHERE data_inregistrare >= CURRENT_DATE - INTERVAL '1 year') nr_recent
+                 FROM animal`,
+                { type: QueryTypes.SELECT }
+            );
+            stats = rows[0] || {};
+        } catch(e) {}
+        try {
+            talii = await orm.getSequelize().query(
+                "SELECT DISTINCT talie FROM animal WHERE talie IS NOT NULL ORDER BY talie",
+                { type: QueryTypes.SELECT }
+            );
+        } catch(e) {}
+        try {
+            locatii = await orm.getSequelize().query(
+                "SELECT DISTINCT locatie FROM animal WHERE locatie IS NOT NULL ORDER BY locatie",
+                { type: QueryTypes.SELECT }
+            );
+        } catch(e) {}
+
         res.render("pagini/animale", {
             animale: animale.map(a => a.dataValues),
-            specieSelectata: specie || "toate"
+            specieSelectata: specie || "toate",
+            stats, talii, locatii
         });
     } catch (err) { console.error(err); afisareEroare(res); }
 });
@@ -546,7 +609,15 @@ app.get("/animal/:id", async function(req, res) {
     try {
         let animal = await Animal.findByPk(id);
         if (!animal) { afisareEroare(res, 404); return; }
-        res.render("pagini/animal", { animal: animal.dataValues });
+        // Bonus 16: animale similare (aceeași specie)
+        let similare = await Animal.findAll({
+            where: { specie: animal.specie, id: { [Op.ne]: id } },
+            limit: 3
+        });
+        res.render("pagini/animal", {
+            animal: animal.dataValues,
+            similare: similare.map(s => s.dataValues)
+        });
     } catch (err) { console.error(err); afisareEroare(res); }
 });
 

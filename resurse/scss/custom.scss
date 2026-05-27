@@ -51,6 +51,7 @@
     // Range slider: bulina cu 50% mai mare decat font-size html (1rem), culoare personalizata
     $form-range-thumb-width:  1.5rem,
     $form-range-thumb-height: 1.5rem,
+    $form-range-thumb-bg:     #c96b43,
     $form-range-track-bg:     #e8bca8,
 
     // Butoane: grosimea borderului
@@ -181,5 +182,31 @@ hr.hr-stelute {
 
     &::after {
         right: 20%;
+    }
+}
+
+// Bonus 18: lista animale noi pe pagina principală
+#animale-noi {
+    margin-top: 1.5rem;
+    .lista-animale-noi {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        li a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--culoare-text);
+            background: var(--culoare-fundal-secundar);
+            border: 1px solid var(--culoare-border);
+            border-radius: 8px;
+            padding: 0.5rem 0.75rem;
+            &:hover { border-color: var(--culoare-accent); }
+            img { width: 60px; height: 50px; object-fit: cover; border-radius: 4px; min-width: 60px; }
+            .nou-info { display: flex; flex-direction: column; font-size: 0.85rem; gap: 0.1rem; }
+        }
     }
 }

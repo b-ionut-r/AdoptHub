@@ -64,7 +64,31 @@ html[data-tema="dark"] body {
     }
 }
 
-// Switch comutare temă
+// Tema natură (verde)
+html[data-tema="nature"] body {
+    --culoare-accent:           #2e7d32;
+    --culoare-fundal:           #f1f8e9;
+    --culoare-fundal-secundar:  #dcedc8;
+    --culoare-text:             #1b5e20;
+    --culoare-border:           #a5d6a7;
+    --culoare-highlight:        #66bb6a;
+    --culoare-separator-c1:     #66bb6a;
+    --culoare-separator-c2:     #2e7d32;
+    --culoare-link-vizitat:     #558b2f;
+    --culoare-text-slab:        #4e7a50;
+    --bs-body-bg:               #f1f8e9;
+    --bs-body-color:            #1b5e20;
+    --bs-border-color:          #a5d6a7;
+}
+
+html[data-tema="nature"] {
+    color-scheme: light;
+    footer, #banner-defilare { background-color: var(--culoare-fundal-secundar); color: var(--culoare-text); }
+    header { background-color: #388e3c; }
+    select[multiple] { background-color: var(--culoare-fundal); color: var(--culoare-text); border-color: var(--culoare-border); }
+}
+
+// Select temă în header
 header {
     position: relative;
 }
@@ -74,5 +98,16 @@ header {
     top: 0.75rem;
     right: 0.75rem;
     margin: 0;
-    color: var(--culoare-fundal);
+
+    #sel-tema {
+        background: rgba(255,255,255,0.2);
+        color: #fff;
+        border: 1px solid rgba(255,255,255,0.5);
+        border-radius: 4px;
+        padding: 0.2rem 0.4rem;
+        font-size: 0.85rem;
+        cursor: pointer;
+
+        option { color: #000; background: #fff; }
+    }
 }

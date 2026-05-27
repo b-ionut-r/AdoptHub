@@ -17,74 +17,94 @@
     <div id="sectiune-filtre" class="border rounded p-3 mb-4">
         <div class="row g-2 align-items-start">
 
+            <%# Bonus 1: text — maxlength din schema VARCHAR(80) %>
             <div class="col-12 col-md-6">
                 <label for="inp-nume" class="form-label">Nume animal:</label>
-                <input type="text" class="form-control form-control-sm" id="inp-nume" placeholder="ex: Max">
+                <input type="text" class="form-control form-control-sm" id="inp-nume" placeholder="ex: Max" maxlength="80">
                 <div class="invalid-feedback">Numele trebuie să conțină doar litere și spații.</div>
             </div>
 
+            <%# Bonus 1: range — min/max din MIN/MAX nivel_energie din BD %>
             <div class="col-12 col-md-6">
                 <label for="inp-energie" class="form-label">Nivel energie minim:</label>
                 <div class="d-flex align-items-center gap-2">
-                    <span>1</span>
-                    <input type="range" class="form-range" id="inp-energie" min="1" max="10" step="1" value="1">
-                    <span>10 (<strong><span id="energie-val">1</span></strong>)</span>
+                    <span><%= locals.stats && stats.min_e != null ? stats.min_e : 1 %></span>
+                    <input type="range" class="form-range" id="inp-energie"
+                           min="<%= locals.stats && stats.min_e != null ? stats.min_e : 1 %>"
+                           max="<%= locals.stats && stats.max_e != null ? stats.max_e : 10 %>"
+                           step="1"
+                           value="<%= locals.stats && stats.min_e != null ? stats.min_e : 1 %>">
+                    <span><%= locals.stats && stats.max_e != null ? stats.max_e : 10 %> (<strong><span id="energie-val"><%= locals.stats && stats.min_e != null ? stats.min_e : 1 %></span></strong>)</span>
                 </div>
             </div>
 
+            <%# Bonus 1: text+datalist — opțiuni locații din BD %>
             <div class="col-12 col-md-6">
                 <label for="inp-locatie" class="form-label">Locație:</label>
                 <input type="text" class="form-control form-control-sm" id="inp-locatie" list="list-locatii" placeholder="oricare">
                 <datalist id="list-locatii">
-                    <option value="București">
-                    <option value="Cluj-Napoca">
-                    <option value="Iași">
-                    <option value="Timișoara">
-                    <option value="Brașov">
-                    <option value="Constanța">
+                    <% if (locals.locatii && locatii.length) { %>
+                        <% for (let loc of locatii) { %><option value="<%= loc.locatie %>"><% } %>
+                    <% } else { %>
+                        <option value="București">
+                        <option value="Cluj-Napoca">
+                        <option value="Iași">
+                        <option value="Timișoara">
+                        <option value="Brașov">
+                        <option value="Constanța">
+                    <% } %>
                 </datalist>
             </div>
 
+            <%# Bonus 1: select — opțiuni talie din BD %>
             <div class="col-12 col-md-6">
                 <label for="sel-talie" class="form-label">Talie:</label>
                 <select class="form-select form-select-sm" id="sel-talie">
                     <option value="oricare" selected>oricare</option>
-                    <option value="mica">Mică</option>
-                    <option value="medie">Medie</option>
-                    <option value="mare">Mare</option>
-                    <option value="foarte_mare">Foarte mare</option>
+                    <% if (locals.talii && talii.length) { %>
+                        <% for (let t of talii) { %><option value="<%= t.talie %>"><%= t.talie.replace('_', ' ') %></option><% } %>
+                    <% } else { %>
+                        <option value="mica">Mică</option>
+                        <option value="medie">Medie</option>
+                        <option value="mare">Mare</option>
+                        <option value="foarte_mare">Foarte mare</option>
+                    <% } %>
                 </select>
             </div>
 
+            <%# Bonus 1: radio — etichetele includ numărul din BD %>
             <div class="col-12 col-md-6">
                 <label class="form-label d-block">Vaccinat:</label>
                 <div class="btn-group btn-group-sm" role="group" aria-label="Filtru vaccinat">
                     <input type="radio" class="btn-check" name="gr-vaccinat" id="vac-toate" value="toate" checked>
                     <label class="btn btn-outline-primary" for="vac-toate">Toate</label>
                     <input type="radio" class="btn-check" name="gr-vaccinat" id="vac-da" value="da">
-                    <label class="btn btn-outline-primary" for="vac-da">Da</label>
+                    <label class="btn btn-outline-primary" for="vac-da">Da (<%= locals.stats && stats.nr_vac != null ? stats.nr_vac : '?' %>)</label>
                     <input type="radio" class="btn-check" name="gr-vaccinat" id="vac-nu" value="nu">
-                    <label class="btn btn-outline-primary" for="vac-nu">Nu</label>
+                    <label class="btn btn-outline-primary" for="vac-nu">Nu (<%= locals.stats && stats.nr_nevac != null ? stats.nr_nevac : '?' %>)</label>
                 </div>
             </div>
 
+            <%# Bonus 1: checkbox — eticheta include numărul din BD %>
             <div class="col-12 col-md-6 d-flex align-items-end">
                 <div>
                     <input type="checkbox" class="btn-check" id="cb-recent">
                     <label class="btn btn-outline-secondary btn-sm" for="cb-recent">
-                        <i class="bi bi-clock-history"></i> Înregistrat în ultimul an
+                        <i class="bi bi-clock-history"></i> Înregistrat în ultimul an (<%= locals.stats && stats.nr_recent != null ? stats.nr_recent : '?' %>)
                     </label>
                 </div>
             </div>
 
+            <%# Bonus 1: textarea — maxlength din schema VARCHAR(300) %>
             <div class="col-12">
                 <div class="form-floating">
-                    <textarea class="form-control" id="ta-trasaturi" placeholder="ex: dresat, jucauș" style="height:80px"></textarea>
+                    <textarea class="form-control" id="ta-trasaturi" placeholder="ex: dresat, jucauș" style="height:80px" maxlength="300"></textarea>
                     <label for="ta-trasaturi">Trăsături (cuvinte cheie, virgulă-separator)</label>
                     <div class="invalid-feedback">Trăsăturile trebuie să conțină doar litere, spații și virgule.</div>
                 </div>
             </div>
 
+            <%# Bonus 1: multiple select — opțiuni specii din BD (deja implementat) %>
             <div class="col-12 col-md-6">
                 <label for="sel-specie" class="form-label">Specii (Ctrl+click):</label>
                 <select class="form-select form-select-sm" id="sel-specie" multiple size="3">
@@ -127,18 +147,28 @@
         </div>
     </div>
 
+    <%# Bonus 15: contor animale afișate %>
+    <p class="mb-1">Animale afișate: <strong id="nr-animale"><%= locals.animale ? animale.length : 0 %></strong></p>
+    <%# Bonus 3: mesaj când nu există rezultate %>
+    <p id="msg-gol" style="display:none" class="text-muted fst-italic">Nu există animale conform filtrării curente.</p>
+    <%# Bonus 5: navigare pagini %>
+    <div id="paginare" class="d-flex gap-1 mb-2 flex-wrap"></div>
+
     <div id="grid-animale">
         <% for (let a of locals.animale) { %>
+            <% let eNou = new Date() - new Date(a.data_inregistrare) <= 365*24*60*60*1000; %>
             <article id="elem_<%= a.id %>" class="card animal <%= a.specie %> <%= a.talie %>"
                      data-nume="<%= a.nume %>"
                      data-varsta="<%= a.varsta_luni %>"
-                     data-locatie="<%= a.locatie %>"
+                     data-locatie="<%= a.locatie || '' %>"
                      data-energie="<%= a.nivel_energie %>"
                      data-trasaturi="<%= a.trasaturi %>"
                      data-data="<%= a.data_inregistrare %>"
                      data-vaccinat="<%= a.vaccinat %>"
                      data-talie="<%= a.talie %>"
                      data-specie="<%= a.specie %>">
+                <%# Bonus 18: badge NOU %>
+                <% if (eNou) { %><span class="badge-nou">NOU</span><% } %>
                 <div class="card-body">
                     <h3 class="card-title"><a href="/animal/<%= a.id %>"><%= a.nume %></a></h3>
                     <div class="continut-animal">
@@ -164,6 +194,24 @@
             </article>
         <% } %>
     </div>
+
+    <%# Bonus 11: modal Bootstrap pentru detalii card %>
+    <div class="modal fade" id="modal-animal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-titlu"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Închide"></button>
+                </div>
+                <div class="modal-body" id="modal-body"></div>
+                <div class="modal-footer">
+                    <a id="modal-link" class="btn btn-primary btn-sm"><i class="bi bi-box-arrow-up-right"></i> Pagina animalului</a>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Închide</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </main>
 <%- include('../fragmente/footer.ejs') %>
 <script src="/resurse/js/animale.js"></script>

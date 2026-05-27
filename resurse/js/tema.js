@@ -1,24 +1,12 @@
+var tema = localStorage.getItem("tema") || "light";
+document.documentElement.dataset.tema = tema;
+
 document.addEventListener("DOMContentLoaded", function() {
-    var btn = document.getElementById("btn-tema");
-    if (!btn) return;
-
-    function actualizeazaButon(tema) {
-        var icon = document.getElementById("tema-icon");
-        if (tema === "dark") {
-            btn.checked = true;
-            if (icon) icon.className = "fa-solid fa-sun";
-        } else {
-            btn.checked = false;
-            if (icon) icon.className = "fa-solid fa-moon";
-        }
-    }
-
-    actualizeazaButon(document.documentElement.dataset.tema || "light");
-
-    btn.addEventListener("change", function() {
-        var nouaTema = this.checked ? "dark" : "light";
-        document.documentElement.dataset.tema = nouaTema;
-        localStorage.setItem("tema", nouaTema);
-        actualizeazaButon(nouaTema);
-    });
+    var sel = document.getElementById("sel-tema");
+    if (!sel) return;
+    sel.value = tema;
+    sel.onchange = function() {
+        document.documentElement.dataset.tema = this.value;
+        localStorage.setItem("tema", this.value);
+    };
 });

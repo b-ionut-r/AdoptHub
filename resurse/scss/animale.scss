@@ -76,6 +76,62 @@
     .descriere-completa { margin-top: 1rem; }
 }
 
+// Bonus 18: badge NOU
+.animal, .animal-detalii {
+    position: relative;
+    .badge-nou {
+        position: absolute;
+        top: 0.5rem;
+        left: 0.5rem;
+        background: #e53935;
+        color: #fff;
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 0.15rem 0.45rem;
+        border-radius: 4px;
+        letter-spacing: 0.05em;
+        z-index: 1;
+    }
+}
+
+// Bonus 16: animale similare
+.animale-similare {
+    margin-top: 2rem;
+    h3 { margin-bottom: 0.75rem; }
+}
+
+.similar-grid {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.similar-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    text-decoration: none;
+    color: var(--culoare-text);
+    background: var(--culoare-fundal-secundar);
+    border: 1px solid var(--culoare-border);
+    border-radius: 8px;
+    padding: 0.75rem;
+    width: 130px;
+    text-align: center;
+    &:hover { border-color: var(--culoare-accent); }
+    img { width: 100px; height: 80px; object-fit: cover; border-radius: 6px; }
+    strong { font-size: 0.9rem; }
+    span { font-size: 0.8rem; color: var(--culoare-text-slab); }
+}
+
+// Bonus 11: modal culori din schema site
+#modal-animal {
+    .modal-header { background: var(--culoare-accent); color: #fff; .btn-close { filter: invert(1); } }
+    .modal-footer { background: var(--culoare-fundal-secundar); }
+    .modal-content { border-color: var(--culoare-border); }
+}
+
 // Div calcul fix
 #div-calcul {
     position: fixed;

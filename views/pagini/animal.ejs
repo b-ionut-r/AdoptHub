@@ -10,7 +10,9 @@
 <%- include('../fragmente/header.ejs') %>
 <main class="pagina-animal">
     <a href="/animale">&larr; Înapoi la lista de animale</a>
+    <% let eNou = new Date() - new Date(animal.data_inregistrare) <= 365*24*60*60*1000; %>
     <article id="elem_<%= animal.id %>" class="animal-detalii <%= animal.specie %>">
+        <% if (eNou) { %><span class="badge-nou">NOU</span><% } %>
         <h2><%= animal.nume %></h2>
         <div class="continut-animal-detalii">
             <table>
@@ -34,6 +36,22 @@
         <p class="descriere-completa"><%= animal.descriere %></p>
         <p class="categorie-animale">Categoria: <strong><%= animal.specie %></strong></p>
     </article>
+
+    <%# Bonus 16: animale similare %>
+    <% if (locals.similare && similare.length > 0) { %>
+    <section class="animale-similare">
+        <h3>Animale similare</h3>
+        <div class="similar-grid">
+            <% for (let s of similare) { %>
+            <a href="/animal/<%= s.id %>" class="similar-card">
+                <img src="/resurse/imagini/animale/<%= s.cale_imagine %>" alt="<%= s.nume %>" onerror="this.src='/resurse/imagini/galerie/portret-caine.jpg'">
+                <strong><%= s.nume %></strong>
+                <span><%= s.talie.replace('_',' ') %>, <%= s.varsta_luni %> luni</span>
+            </a>
+            <% } %>
+        </div>
+    </section>
+    <% } %>
 </main>
 <%- include('../fragmente/footer.ejs') %>
 <script>
