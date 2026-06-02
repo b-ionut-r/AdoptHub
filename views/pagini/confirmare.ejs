@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <title>AdoptHub | Confirmare cont</title>
+    <%- include('../fragmente/head.ejs') %>
+</head>
+<body id="top">
+<%- include('../fragmente/header.ejs') %>
+<main>
+    <% if (locals.ok) { %>
+    <h2>Cont confirmat cu succes!</h2>
+    <p>Adresa de email a fost confirmată. Acum te poți <a href="/">autentifica</a>.</p>
+    <% } else { %>
+    <h2>Link invalid</h2>
+    <p>Linkul de confirmare nu este valid sau a expirat.</p>
+    <% } %>
+</main>
+<%- include('../fragmente/footer.ejs') %>
+</body>
+</html>

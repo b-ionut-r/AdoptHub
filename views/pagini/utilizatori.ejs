@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <title>AdoptHub | Utilizatori</title>
+    <%- include('../fragmente/head.ejs') %>
+    <link rel="stylesheet" href="/resurse/css/animale.css">
+</head>
+<body id="top">
+<%- include('../fragmente/header.ejs') %>
+<main>
+    <h2>Utilizatori înregistrați</h2>
+    <% if (locals.err) { %><p style="color:red"><%= locals.err %></p><% } %>
+    <% if (!locals.err || locals.err === "") { %>
+    <table class="table table-striped table-hover table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Nume</th>
+                <th>Prenume</th>
+                <th>Username</th>
+                <th>E-mail</th>
+                <th>Acțiune</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let u of useri) { %>
+            <tr>
+                <td><%= u.nume %></td>
+                <td><%= u.prenume %></td>
+                <td><%= u.username %></td>
+                <td><%= u.email %></td>
+                <td>
+                    <form method="post" action="/sterge_utiliz" enctype="multipart/form-data" style="display:inline" onsubmit="return confirm('Ștergi utilizatorul <%= u.username %>?')">
+                        <input type="hidden" name="id_utiliz" value="<%= u.id %>">
+                        <button type="submit" class="btn btn-danger btn-sm">Șterge utilizator</button>
+                    </form>
+                </td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+    <% } %>
+</main>
+<%- include('../fragmente/footer.ejs') %>
+</body>
+</html>

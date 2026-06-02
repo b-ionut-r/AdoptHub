@@ -22,7 +22,7 @@ window.onload = function() {
         energieVal.innerHTML = this.value;
     };
 
-    function valideazaNume() {
+    function valideazaNume() { /* handler */
         let val = inpNume.value.trim();
         let ok = val === "" || /^[a-zA-ZăâîșțĂÂÎȘȚ\s]+$/.test(val);
         inpNume.classList.toggle("is-invalid", !ok);
@@ -42,7 +42,7 @@ window.onload = function() {
     function valideazaTot() {
         let ok = valideazaNume() & valideazaTrasaturi();
         if (!ok) alert("Corectați câmpurile marcate cu roșu înainte de a continua.");
-        return !!ok;
+        return !!ok; // convertim la boolean pentru a returna false dacă ok e 0 (adică fals) și true dacă ok e 1 (adică adevărat)
     }
 
     function salveazaFiltre() {
@@ -96,7 +96,6 @@ window.onload = function() {
         nav.innerHTML = "";
         let nrPag = Math.ceil(vizibile.length / K);
         for (let i = 1; i <= nrPag; i++) {
-            let btn = document.createElement("button");
             btn.textContent = i;
             btn.className = "btn btn-sm " + (i === p ? "btn-primary" : "btn-outline-primary");
             (function(pg) { btn.onclick = function() { afiseazaPagina(pg); }; })(i);
@@ -107,8 +106,9 @@ window.onload = function() {
     // Bonus 4: funcție de filtrare separată (apelată și la onchange)
     function filtreaza() {
         let valNume    = inpNume.value.trim().toLowerCase();
-        let valLocatie = inpLocatie.value.trim().toLowerCase();
         let energieMin = parseInt(inpEnergie.value);
+        let valLocatie = inpLocatie.value.trim().toLowerCase();
+        /* talie din dataset */
         let cuvinte    = taTrasaturi.value.trim() !== ""
             ? taTrasaturi.value.trim().toLowerCase().split(",").map(c => c.trim()).filter(c => c)
             : [];
@@ -142,7 +142,7 @@ window.onload = function() {
             if (cuvinte.length > 0 && !cuvinte.some(c => norm(prod.dataset.trasaturi || "").includes(norm(c))))
                 cond = false;
 
-            if (selTalie.value !== "oricare" && prod.dataset.talie !== selTalie.value) cond = false;
+            if (selTalie.value !== "oricare" && prod.dataset.talie !== selTalie.value) cond = false; /* talie din dataset */
 
             if (speciiSelectate.length > 0 && !speciiSelectate.includes(prod.dataset.specie)) cond = false;
 

@@ -11,3 +11,5 @@ temp/
 logs/
 backup/
 fisiere_uploadate/
+poze_uploadate/
+postgress_credentials.txt

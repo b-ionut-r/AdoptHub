@@ -93,6 +93,15 @@
 
         <section id="comunitate" class="zona5">
             <h2>Comunitate</h2>
+            <% if (locals.utilizator) { %>
+            <div id="salut-user">
+                <img src="/<%- locals.utilizator.cale_imagine || 'resurse/imagini/user-default.png' %>" alt="Poza profil" style="width:80px;height:80px;object-fit:cover;border-radius:50%">
+                <p>Bine ai venit, <strong><%= locals.utilizator.username %></strong>!</p>
+                <% if (locals.utilizator.ultima_logare) { %>
+                <p>Ultima logare: <%= locals.formateazaData(locals.utilizator.ultima_logare) %></p>
+                <% } %>
+            </div>
+            <% } %>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
         </section>
 
@@ -498,6 +507,12 @@
             </p>
         </section>
     </main>
+
+    <% if (locals.utilizatoriOnline) { %>
+    <section id="online-users" style="padding:10px;background:#f8f9fa;text-align:center">
+        <strong>Utilizatori online:</strong> <%- locals.utilizatoriOnline %>
+    </section>
+    <% } %>
 
     <%- include('../fragmente/footer.ejs') %>
 </body>

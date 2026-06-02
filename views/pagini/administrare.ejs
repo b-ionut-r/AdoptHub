@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <title>AdoptHub | Administrare</title>
+    <%- include('../fragmente/head.ejs') %>
+    <link rel="stylesheet" href="/resurse/css/animale.css">
+</head>
+<body id="top">
+<%- include('../fragmente/header.ejs') %>
+<main>
+    <h2>Administrare animale</h2>
+    <% if (locals.err) { %><p style="color:red"><%= locals.err %></p><% } %>
+    <% if (locals.raspuns) { %><p style="color:green"><%= locals.raspuns %></p><% } %>
+
+    <h3>Adaugă animal</h3>
+    <form method="post" action="/administrare">
+        <input type="hidden" name="actiune" value="adauga">
+        <p><label>Nume: <input type="text" name="nume" required></label></p>
+        <p><label>Specie:
+            <select name="specie">
+                <% for (let sp of (locals.speciiDisponibile || [])) { %>
+                <option value="<%= sp %>"><%= (locals.numeSpecii || {})[sp] || sp %></option>
+                <% } %>
+            </select>
+        </label></p>
+        <p><label>Descriere: <textarea name="descriere"></textarea></label></p>
+        <p><input type="submit" value="Adaugă"></p>
+    </form>
+
+    <h3>Animale existente</h3>
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr><th>ID</th><th>Nume</th><th>Specie</th><th>Acțiune</th></tr>
+        </thead>
+        <tbody>
+        <% for (let a of animale) { %>
+        <tr>
+            <td><%= a.id %></td>
+            <td><%= a.nume %></td>
+            <td><%= a.specie %></td>
+            <td>
+                <form method="post" action="/administrare" style="display:inline" onsubmit="return confirm('Ștergi animalul?')">
+                    <input type="hidden" name="actiune" value="sterge">
+                    <input type="hidden" name="id" value="<%= a.id %>">
+                    <button type="submit" class="btn btn-danger btn-sm">Șterge</button>
+                </form>
+            </td>
+        </tr>
+        <% } %>
+        </tbody>
+    </table>
+</main>
+<%- include('../fragmente/footer.ejs') %>
+</body>
+</html>

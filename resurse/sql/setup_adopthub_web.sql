@@ -10,6 +10,8 @@ CREATE USER adopthub_web WITH PASSWORD 'adopthub2025';
 GRANT CONNECT ON DATABASE adopthub_web TO adopthub_web;
 
 CREATE TYPE specie_enum AS ENUM ('caine', 'pisica', 'iepure', 'hamster', 'altele');
+CREATE TYPE talie_enum AS ENUM ('mica', 'medie', 'mare', 'foarte_mare');
+
 
 CREATE TABLE animal (
     id                SERIAL PRIMARY KEY,

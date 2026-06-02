@@ -11879,6 +11879,34 @@ a[href^=http]::before {
   grid-column: 1/-1;
 }
 
+hr.hr-stelute {
+  border: none;
+  height: 3px;
+  background-color: #c96b43;
+  position: relative;
+  overflow: visible;
+  margin: 3rem auto;
+  width: 60%;
+  opacity: 1;
+}
+hr.hr-stelute::before, hr.hr-stelute::after {
+  content: "⭐";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  color: #c96b43;
+  background-color: #faf5f0;
+  padding: 0 0.5rem;
+}
+hr.hr-stelute::before {
+  left: 20%;
+}
+hr.hr-stelute::after {
+  right: 20%;
+}
+
+/***********************************************************************************************/
 @keyframes banner-intra {
   0% {
     transform: translateX(-100%);
@@ -11957,33 +11985,6 @@ body.banner-vizibil {
 }
 body.banner-vizibil #link-top {
   bottom: 5.5rem;
-}
-
-hr.hr-stelute {
-  border: none;
-  height: 3px;
-  background-color: #c96b43;
-  position: relative;
-  overflow: visible;
-  margin: 3rem auto;
-  width: 60%;
-  opacity: 1;
-}
-hr.hr-stelute::before, hr.hr-stelute::after {
-  content: "⭐";
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.5rem;
-  color: #c96b43;
-  background-color: #faf5f0;
-  padding: 0 0.5rem;
-}
-hr.hr-stelute::before {
-  left: 20%;
-}
-hr.hr-stelute::after {
-  right: 20%;
 }
 
 #animale-noi {

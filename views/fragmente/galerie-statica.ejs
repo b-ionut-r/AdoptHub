@@ -23,7 +23,7 @@
                         width="480"
                         height="320">
                 </picture>
-                <figcaption>
+                <figcaption> 
                     <span class="titlu-galerie"><%= imagine.titlu %></span>
                     <span class="descriere-galerie"><%= imagine.descriere %></span>
                     <span class="interval-galerie">Vizibil intre <%= imagine.timp %></span>
@@ -44,7 +44,7 @@
         <p class="galerie-goala">Nu exista imagini in intervalul orar curent.</p>
         <% } %>
 
-        <% if (typeof afiseazaLinkGalerie !== "undefined" && afiseazaLinkGalerie) { %>
+        <% if (locals.afiseazaLinkGalerie) { %>
         <p class="link-galerie-pagina"><a href="/galerie">Vezi galeria completa</a></p>
         <% } %>
     </section>

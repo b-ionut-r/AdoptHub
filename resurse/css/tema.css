@@ -73,6 +73,10 @@ html[data-tema=nature] footer, html[data-tema=nature] #banner-defilare {
 }
 html[data-tema=nature] header {
   background-color: #388e3c;
+  color: white;
+}
+html[data-tema=nature] header nav ul > li > a, html[data-tema=nature] header p, html[data-tema=nature] header h1 {
+  color: white;
 }
 html[data-tema=nature] select[multiple] {
   background-color: var(--culoare-fundal);

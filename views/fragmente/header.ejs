@@ -10,6 +10,25 @@
         <p>Cea mai căutată platformă pentru adopția animalelor de companie din România.</p>
         <p>IP utilizator: <%- locals.ip %></p>
 
+        <%# [etapa8] formular login in header - afisat doar daca nimeni nu e logat %>
+        <% if (!locals.utilizator) { %>
+        <form method="post" action="/login" enctype="multipart/form-data" id="form-login"
+              style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;margin:6px 0">
+            <input type="text" name="username" required placeholder="Username"
+                   style="width:140px;padding:4px 8px;border-radius:4px;border:1px solid rgba(255,255,255,0.5);background:rgba(255,255,255,0.15);color:inherit;font-size:.9rem">
+            <input type="password" name="parola" required placeholder="Parolă"
+                   style="width:130px;padding:4px 8px;border-radius:4px;border:1px solid rgba(255,255,255,0.5);background:rgba(255,255,255,0.15);color:inherit;font-size:.9rem">
+            <button type="submit"
+                    style="padding:4px 12px;border-radius:4px;border:1px solid rgba(255,255,255,0.6);background:rgba(255,255,255,0.2);color:inherit;cursor:pointer;font-size:.9rem">Autentificare</button>
+        </form>
+        <% } else { %>
+        <p style="margin:6px 0;font-weight:600">
+            <%= locals.utilizator.nume %> <%= locals.utilizator.prenume %>
+            <a href="/logout" title="Deconectare" style="margin-left:6px;text-decoration:none;font-size:1.2em">&#128682;</a>
+        </p>
+        <% } %>
+        <% if (locals.mesajLogin) { %><p style="color:#ffd;margin:2px 0;font-size:.9em"><%= locals.mesajLogin %></p><% } %>
+
         <nav aria-label="Navigație principală">
             <input type="checkbox" id="nav-toggle">
             <label for="nav-toggle" id="hamburger"><span></span><span></span><span></span></label>
@@ -43,6 +62,27 @@
                 </li>
                 <li><a href="/adaposturi"><i class="fa-solid fa-building-user"></i> <span class="text-nav">Adăposturi</span></a></li>
                 <li><a href="/despre"><i class="fa-solid fa-envelope"></i> <span class="text-nav">Despre &amp; Contact</span></a></li>
+                <% if (locals.utilizator) { %>
+                <li>
+                    <a href="/profil"><i class="fa-solid fa-user"></i> <span class="text-nav">Contul meu</span></a>
+                    <ul>
+                        <li><a href="/profil">Profil</a></li>
+                        <li><a href="/logout">Deconectare</a></li>
+                    </ul>
+                </li>
+                <%# [etapa8] meniu admin - vizibil doar daca utilizatorul are drept vizualizareUtilizatori %>
+                <% if (locals.utilizator.areDreptul && locals.utilizator.areDreptul(locals.Drepturi.vizualizareUtilizatori)) { %>
+                <li>
+                    <a href="/utilizatori"><i class="fa-solid fa-users"></i> <span class="text-nav">Utilizatori</span></a>
+                    <ul>
+                        <li><a href="/utilizatori">Utilizatori</a></li>
+                        <li><a href="/administrare">Administrare</a></li>
+                    </ul>
+                </li>
+                <% } %>
+                <% } else { %>
+                <li><a href="/inregistrare"><i class="fa-solid fa-user-plus"></i> <span class="text-nav">Înregistrare</span></a></li>
+                <% } %>
             </ul>
         </nav>
         <div id="banner-defilare"><span>Adopție responsabilă &mdash; fiecare animal merită o a doua șansă &bull; Câini, pisici și alte animale disponibile în toată România &bull; Adăposturi verificate din toată țara</span></div>

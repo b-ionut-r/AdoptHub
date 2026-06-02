@@ -84,7 +84,8 @@ html[data-tema="nature"] body {
 html[data-tema="nature"] {
     color-scheme: light;
     footer, #banner-defilare { background-color: var(--culoare-fundal-secundar); color: var(--culoare-text); }
-    header { background-color: #388e3c; }
+    header { background-color: #388e3c; color: white; }
+    header nav ul > li > a, header p, header h1 { color: white; }
     select[multiple] { background-color: var(--culoare-fundal); color: var(--culoare-text); border-color: var(--culoare-border); }
 }
 

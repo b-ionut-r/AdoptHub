@@ -59,16 +59,17 @@ $culoare-bordura: #1e3f5a;
 
 #galerie-animata:hover figure {
     animation-play-state: paused;
-}
+} // pauza animatie la hover
 
 @for $i from 1 through $nrimag {
     #galerie-animata figure:nth-of-type(#{$i}) {
         animation-delay: -($nrimag - $i + 1) * $durata-imagine;
-    }
+    } // startul animatiei pentru fiecare imagine este decalata astfel incat sa se succede la intervale regulate, in ordine
 }
 
-$p: 100% / $nrimag;
-
+$p: 100% / $nrimag; // p = progres
+// clip-pathul incepe cu totul vizibil, apoi ramane vizibil pana la p/2, 
+// apoi dispare treptat pana la p, apoi ramane invizibil pana la 100%-p, apoi reapare treptat pana la 100% (si ramane vizibil pana la 100% pentru a evita un salt vizual la reluarea animatiei)
 @keyframes galerie-animata {
     0% {
         opacity: 1;

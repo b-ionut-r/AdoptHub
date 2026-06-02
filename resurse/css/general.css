@@ -691,20 +691,24 @@ msub mi:last-child {
 }
 
 
-/* EFECT: text selectat */
+
+
+/***********************************************************************************************/
+
+/* EFECT: text selectat 
+Schimbarea afișării implicite a textului selectat*/
 ::selection {
     background-color: var(--culoare-accent);
     color: var(--culoare-fundal);
 }
 
 
-/* EFECT: text pe coloane */
+/* EFECT: Scrierea textului pe coloane */
 #intro > section {
     column-count: 3;
     column-gap: 1.5rem;
     column-rule: 1px solid var(--culoare-border);
 }
-
 @media (max-width: 1000px) {
     #intro > section {
         column-count: 1;
@@ -714,31 +718,30 @@ msub mi:last-child {
 
 /* EFECT: text defilant */
 #banner-defilare {
-    overflow: hidden;
+    overflow: hidden; /* fara scrollbar */
     background-color: var(--culoare-text);
     color: var(--culoare-fundal);
     padding: 0.4rem 0;
     font-size: 0.9rem;
 }
-
 #banner-defilare span {
-    display: inline-block;
-    white-space: nowrap;
-    animation: defilare 22s linear infinite;
+    display: inline-block; /* ca sa mearga transform */
+    white-space: nowrap; /* o singura linie, fara wrap */
+    animation: defilare 22s linear infinite; /* infinite pentru loop */
 }
-
 @keyframes defilare {
     from { transform: translateX(100vw); }
-    to   { transform: translateX(-100%); }
+    to   { transform: translateX(-100vw); }
 }
 
 
-/* EFECT: background-attachment fix cu animatie */
+/* EFECT: background fix la scroll (pagina despre.ejs),
+cu proprietatea background-attachment */
 #fundal-fix {
     min-height: 280px;
     background-image: url('/resurse/imagini/woman-petting-adorable-dog.jpg');
-    background-attachment: fixed;
-    background-size: cover;
+    background-attachment: fixed; /* nu se misca la scroll */
+    background-size: cover; /* acopera tot containerul (div-ul) */ 
     background-position: center;
     animation: schimbaFundal 12s linear infinite;
     display: flex;
@@ -749,7 +752,6 @@ msub mi:last-child {
     font-size: 1.4rem;
     font-weight: 700;
 }
-
 @keyframes schimbaFundal {
     0%   { background-image: url('/resurse/imagini/woman-petting-adorable-dog.jpg'); }
     34%  { background-image: url('/resurse/imagini/max-mare.jpg'); }
@@ -757,120 +759,82 @@ msub mi:last-child {
 }
 
 
-/* Tabel responsive + tabel transpus doar in pagina Despre */
+
+
+
+/* Pagina Despre — layout + tabel responsive/transpus */
 .pagina-despre {
     grid-template-columns: minmax(24rem, 30rem) minmax(0, 1fr);
     grid-template-areas: none;
     align-items: start;
 }
 
-#despre-prezentare {
-    grid-column: 1;
-    align-self: start;
-}
+#despre-prezentare { grid-column: 1; align-self: start; }
 
 .pagina-despre #tabel-adoptat {
     grid-column: 2;
     grid-row: 1;
     width: min(100%, 64rem);
-    justify-self: center;
-    align-self: start;
+    justify-self: center; /* orizontal */
+    align-self: start; /* vertical */
 }
 
-.pagina-despre #tabel-adoptat h3 {
-    margin-top: 0;
-}
+.pagina-despre #tabel-adoptat h3 { margin-top: 0; }
 
-#tabel-adoptat {
-    grid-column: 1 / -1;
-}
+#tabel-adoptat { grid-column: 1 / -1; }
 
-#tabel-adoptat .tabel-responsiv-container {
-    overflow-x: auto;
-}
+#tabel-adoptat .tabel-responsiv-container { overflow-x: auto; }
 
-#tabel-adoptat #transpus {
-    width: 100%;
-    min-width: 760px;
-}
+#tabel-adoptat #transpus { width: 100%; }
 
+/* Tabel transpus — ecran mediu (700–1000px) */
 @media (min-width: 700px) and (max-width: 1000px) {
-    #tabel-adoptat #transpus {
-        display: block;
-        width: max-content;
-        min-width: 100%;
-    }
+    #tabel-adoptat #transpus { display: block; width: max-content; min-width: 100%; }
     #tabel-adoptat #transpus caption {
-        display: block;
-        width: 100%;
-        box-sizing: border-box;
-        margin: 0 0 0.75rem;
-        padding: 0;
-        background: none;
-        border: none;
-        text-align: left;
-        white-space: normal;
+        display: block; width: 100%; margin: 0 0 0.75rem;
+        background: none; border: none; text-align: left;
     }
     #tabel-adoptat #transpus thead,
     #tabel-adoptat #transpus tbody,
-    #tabel-adoptat #transpus tr {
-        display: block;
-        float: left;
-    }
+    #tabel-adoptat #transpus tr { display: block; float: left; }
     #tabel-adoptat #transpus th,
     #tabel-adoptat #transpus td {
-        display: block;
-        border: 1px solid var(--culoare-border);
-        padding: 0.4rem 0.75rem;
-        white-space: nowrap;
+        display: block; border: 1px solid var(--culoare-border);
+        padding: 0.4rem 0.75rem; white-space: nowrap;
     }
     #tabel-adoptat #transpus td + td,
-    #tabel-adoptat #transpus th + th {
-        border-top: none;
-    }
-    /* border-collapse nu ajuta aici; elementele nu mai sunt afisate ca tabel. */
-    #tabel-adoptat #transpus tbody td {
-        border-left: none;
-    }
-    #tabel-adoptat #transpus::after {
-        content: "";
-        display: block;
-        clear: both;
-    }
+    #tabel-adoptat #transpus th + th { border-top: none; } /*evitare dublare border */
+    #tabel-adoptat #transpus tbody td { border-left: none; }
+    #tabel-adoptat #transpus::after { content: ""; display: block; clear: both; } /* clearfix pentru float */
 }
 
-@media (max-width: 1000px) {
-    .pagina-despre {
-        grid-template-columns: 1fr;
-        grid-template-areas: none;
-    }
 
+/* Layout ecran mediu/mic */
+@media (max-width: 1000px) {
+    .pagina-despre { grid-template-columns: 1fr; grid-template-areas: none; }
     #despre-prezentare,
     .pagina-despre #tabel-adoptat {
-        grid-column: 1;
-        grid-row: auto;
-        width: 100%;
-        justify-self: stretch;
-        align-self: start;
+        grid-column: 1; grid-row: auto;
+        width: 100%; justify-self: stretch; align-self: start;
     }
 }
 
 
-/* EFECT: stilizare hr */
+/* EFECT: stilizare hr (pagina despre.ejs) */
 hr.hr-decorat {
     position: relative;
     display: block;
     width: min(78%, 28rem);
     height: 0;
     border: none;
-    border-top: 0.18rem solid var(--culoare-highlight);
+    border-top: 0.18rem solid var(--culoare-highlight); /* doar o linie subtire verde */
     margin: 1.75rem auto 1.5rem;
     overflow: visible;
 }
 
 hr.hr-decorat::before,
 hr.hr-decorat::after {
-    content: "\2733";
+    content: "\2733"; /* simbolul ✳ */
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -880,9 +844,11 @@ hr.hr-decorat::after {
 }
 
 hr.hr-decorat::before {
-    right: calc(100% + 0.4rem);
+    right: calc(100% + 0.4rem); /* marginea dreapta fata de cea dreapta a paritelui */
 }
 
 hr.hr-decorat::after {
     left: calc(100% + 0.4rem);
 }
+
+/***********************************************************************************************/

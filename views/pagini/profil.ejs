@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <title>AdoptHub | Profil</title>
+    <%- include('../fragmente/head.ejs') %>
+    <% if (locals.utilizator) { %>
+    <script>
+    window.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("inp-username").value = "<%= locals.utilizator.username %>";
+        document.getElementById("inp-username").readOnly = true;
+        document.getElementById("inp-nume").value = "<%= locals.utilizator.nume %>";
+        document.getElementById("inp-prenume").value = "<%= locals.utilizator.prenume %>";
+        document.getElementById("inp-email").value = "<%= locals.utilizator.email %>";
+        if ("<%= locals.utilizator.data_nasterii %>")
+            document.getElementById("inp-nastere").value = "<%= locals.utilizator.data_nasterii ? new Date(locals.utilizator.data_nasterii).toISOString().split('T')[0] : '' %>";
+        var opts = document.getElementById("sel-ocupatie").options;
+        for (var o of opts)
+            if (o.value === "<%= locals.utilizator.ocupatie %>") o.selected = true;
+    });
+    </script>
+    <% } %>
+</head>
+<body id="top">
+<%- include('../fragmente/header.ejs') %>
+<main class="container py-4">
+    <% if (!locals.utilizator) { %>
+    <p class="alert alert-warning">Nu ești autentificat.</p>
+    <% } else { %>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <h2 class="mb-3">Profilul meu</h2>
+
+            <% if (locals.err) { %><div class="alert alert-danger py-2"><%= locals.err %></div><% } %>
+            <% if (locals.raspuns) { %><div class="alert alert-success py-2"><%= locals.raspuns %></div><% } %>
+
+            <div class="mb-3 text-center">
+                <img src="/<%- locals.utilizator.cale_imagine || 'resurse/imagini/user-default.png' %>"
+                     alt="Poza profil"
+                     style="width:90px;height:90px;object-fit:cover;border-radius:50%;border:3px solid var(--culoare-accent,#c96b43)">
+            </div>
+
+            <form method="post" action="/profil" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label">Username (nu poate fi modificat)</label>
+                    <input type="text" id="inp-username" name="username" class="form-control bg-light">
+                </div>
+                <div class="row g-2 mb-3">
+                    <div class="col">
+                        <label class="form-label">Nume</label>
+                        <input type="text" id="inp-nume" name="nume" class="form-control">
+                    </div>
+                    <div class="col">
+                        <label class="form-label">Prenume</label>
+                        <input type="text" id="inp-prenume" name="prenume" class="form-control">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="text" id="inp-email" name="email" class="form-control">
+                </div>
+                <div class="row g-2 mb-3">
+                    <div class="col">
+                        <label class="form-label">Data nașterii</label>
+                        <input type="date" id="inp-nastere" name="data_nasterii" class="form-control">
+                    </div>
+                    <div class="col">
+                        <label class="form-label">Culoare chat</label>
+                        <input type="color" name="culoare_chat"
+                               value="<%= locals.utilizator.culoare_chat || '#000000' %>"
+                               class="form-control form-control-color w-100">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Ocupație</label>
+                    <select id="sel-ocupatie" name="ocupatie" class="form-select">
+                        <option value="nu doresc sa spun">Nu doresc să spun</option>
+                        <option value="student">Student</option>
+                        <option value="profesor">Profesor</option>
+                        <option value="inginer">Inginer</option>
+                        <option value="medic">Medic</option>
+                        <option value="programator">Programator</option>
+                        <option value="pensionar">Pensionar</option>
+                        <option value="altele">Altele</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Parolă nouă <small class="text-muted">(lasă gol dacă nu schimbi)</small></label>
+                    <input type="password" name="parola_noua" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Schimbă poza de profil</label>
+                    <input type="file" name="cale_imagine" accept="image/*" class="form-control">
+                </div>
+                <hr>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Parola curentă* <small class="text-muted">(obligatorie pentru orice modificare)</small></label>
+                    <input type="password" name="parola_curenta" required class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">Salvează modificările</button>
+            </form>
+
+            <hr class="my-4">
+            <h5 class="text-danger">Ștergere cont</h5>
+            <form method="post" action="/sterge_cont" enctype="multipart/form-data" class="d-flex gap-2 align-items-end">
+                <div>
+                    <label class="form-label mb-1">Parolă*</label>
+                    <input type="password" name="parola" required class="form-control form-control-sm">
+                </div>
+                <button type="submit" class="btn btn-danger btn-sm"
+                        onclick="return confirm('Ești sigur că vrei să ștergi contul?')">Șterge contul</button>
+            </form>
+        </div>
+    </div>
+    <% } %>
+</main>
+<%- include('../fragmente/footer.ejs') %>
+</body>
+</html>

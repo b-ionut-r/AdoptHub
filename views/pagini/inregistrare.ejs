@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <title>AdoptHub | Înregistrare</title>
+    <%- include('../fragmente/head.ejs') %>
+    <style>
+        #form-inreg-wrap { max-width:900px; width:100%; margin:2rem auto; padding:1.5rem 2.5rem; }
+        #form-inreg label { display:block; margin-top:.9rem; font-weight:500; }
+        #form-inreg input:not([type=color]):not([type=file]):not([type=submit]):not([type=reset]),
+        #form-inreg select, #form-inreg textarea {
+            display:block; width:100%; box-sizing:border-box;
+            padding:6px 10px; border-radius:5px;
+            border:1px solid var(--culoare-border, #ccc);
+            background:var(--culoare-fundal, #fff);
+            color:var(--culoare-text, #333);
+            font-size:1rem; margin-top:3px;
+        }
+        .form-row { display:flex; gap:12px; }
+        .form-row > div { flex:1; min-width:0; }
+        #form-inreg input[type=color] { width:60px; height:36px; padding:2px; border-radius:4px; cursor:pointer; margin-top:3px; }
+        #form-inreg .btn-inreg { margin-top:1.2rem; padding:8px 20px; border-radius:5px; border:none; cursor:pointer;
+                                  background:var(--culoare-accent,#c96b43); color:white; font-size:1rem; }
+        #form-inreg .btn-reset { margin-top:1.2rem; margin-left:8px; padding:8px 16px; border-radius:5px; cursor:pointer;
+                                   background:transparent; border:1px solid var(--culoare-border,#ccc); font-size:1rem; color:inherit; }
+    </style>
+</head>
+<body id="top">
+<%- include('../fragmente/header.ejs') %>
+<main style="display:flex;justify-content:center;align-items:flex-start;">
+    <div id="form-inreg-wrap">
+        <h2>Înregistrare cont</h2>
+
+        <% if (locals.err) { %>
+        <div class="alert alert-danger py-2 mt-2"><%= locals.err %></div>
+        <% } %>
+        <% if (locals.sugestii && locals.sugestii.length > 0) { %>
+        <p>Sugestii: <% for (let s of locals.sugestii) { %>
+            <a href="#" class="badge bg-secondary text-decoration-none me-1"
+               onclick="document.querySelector('[name=username]').value='<%= s %>'; return false;"><%= s %></a>
+        <% } %></p>
+        <% } %>
+        <% if (locals.raspuns) { %>
+        <div class="alert alert-success py-2 mt-2"><%= locals.raspuns %></div>
+        <% } %>
+
+        <form id="form-inreg" method="post" action="/inregistrare" enctype="multipart/form-data">
+            <label>Username*</label>
+            <input type="text" name="username" required pattern="[A-Za-z0-9#_./]+">
+
+            <div class="form-row">
+                <div>
+                    <label>Nume*</label>
+                    <input type="text" name="nume" required>
+                </div>
+                <div>
+                    <label>Prenume*</label>
+                    <input type="text" name="prenume" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div>
+                    <label>Parolă*</label>
+                    <input type="password" name="parola" required id="inp-parola">
+                </div>
+                <div id="p-reintrod">
+                    <label>Reintroduceți parola*</label>
+                    <input type="password" name="rparola" required id="inp-rparola">
+                </div>
+            </div>
+
+            <label>Email*</label>
+            <input type="email" name="email" required>
+
+            <div class="form-row">
+                <div>
+                    <label>Data nașterii</label>
+                    <input type="date" name="data_nasterii">
+                </div>
+                <div>
+                    <label>Culoare chat</label>
+                    <input type="color" name="culoare_chat" value="#000000">
+                </div>
+            </div>
+
+            <label>Ocupație</label>
+            <select name="ocupatie">
+                <option value="nu doresc sa spun">Nu doresc să spun</option>
+                <option value="student">Student</option>
+                <option value="profesor">Profesor</option>
+                <option value="inginer">Inginer</option>
+                <option value="medic">Medic</option>
+                <option value="programator">Programator</option>
+                <option value="pensionar">Pensionar</option>
+                <option value="altele">Altele</option>
+            </select>
+
+            <label>Poză profil</label>
+            <input type="file" name="cale_imagine" accept="image/*">
+
+            <div>
+                <button type="submit" class="btn-inreg">Înregistrare</button>
+                <button type="reset" class="btn-reset">Resetează</button>
+            </div>
+            <p id="mesaj-eroare-client" style="color:red;margin-top:.5rem"></p>
+        </form>
+    </div>
+</main>
+<%- include('../fragmente/footer.ejs') %>
+<script src="/resurse/js/inregistrare.js"></script>
+</body>
+</html>
